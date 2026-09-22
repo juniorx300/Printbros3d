@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="siteTitleTag">PrintBros 3D - Catálogo & Impressão 3D Personalizada</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              orange: 'var(--brand-orange, #FF9800)',
+              darkOrange: 'var(--brand-dark-orange, #F57C00)',
+              purple: 'var(--brand-purple, #9C27B0)',
+              darkPurple: 'var(--brand-dark-purple, #7B1FA2)',
+              cyan: 'var(--brand-cyan, #00E5FF)',
+              darkCyan: 'var(--brand-dark-cyan, #00B8D4)',
+            },
+            theme: {
+              bg: '#12071B',
+              card: '#1D0E2B',
+              border: '#321949',
+              hover: '#28133B'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --brand-orange: #FF9800;
+      --brand-dark-orange: #F57C00;
+      --brand-purple: #9C27B0;
+      --brand-dark-purple: #7B1FA2;
+      --brand-cyan: #00E5FF;
+      --brand-dark-cyan: #00B8D4;
+      --bg-main: #12071B;
+      --bg-card: #1D0E2B;
+      --bg-border: #321949;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: #F3F4F6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #12071B;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #321949;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--brand-purple);
+    }
+
+    /* Logo Specific Visual Glow Effects */
+    .glow-orange {
+      box-shadow: 0 0 20px -3px var(--brand-orange);
+    }
+    .glow-purple {
+      box-shadow: 0 0 20px -3px var(--brand-purple);
+    }
+    .glow-cyan {
+      box-shadow: 0 0 20px -3px var(--brand-cyan);
+    }
+    .text-gradient-logo {
+      background: linear-gradient(135deg, #FFFFFF 0%, #FF9800 50%, #00E5FF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .bg-gradient-cube {
+      background: linear-gradient(135deg, var(--brand-orange) 0%, var(--brand-purple) 60%, var(--brand-cyan) 100%);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-purple selection:text-white">
+
+  <header class="sticky top-0 z-30 bg-[#12071B]/90 backdrop-blur-md border-b border-theme-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Logo & Branding Header -->
+      <a href="#" class="flex items-center gap-3.5 group">
+        <div id="logoContainer" class="w-12 h-12 rounded-2xl bg-theme-card border border-theme-border flex items-center justify-center p-1 glow-purple group-hover:scale-105 transition-all duration-300 overflow-hidden">
+          <img id="customLogoImg" src="image_1118a4.jpg" class="w-full h-full object-cover rounded-xl" alt="PrintBros 3D Logo" onerror="this.classList.add('hidden'); document.getElementById('logoFallbackIcon').classList.remove('hidden');">
+          <i data-lucide="box" id="logoFallbackIcon" class="hidden w-7 h-7 text-brand-orange"></i>
+        </div>
+        <div>
+          <span id="headerBrandName" class="text-xl font-extrabold tracking-tight text-white block leading-none">PRINTBROS <span class="text-brand-cyan font-black">3D</span></span>
+          <span id="headerTagline" class="text-[10px] text-brand-orange font-semibold uppercase tracking-widest mt-1 block">Manufatura Aditiva & Design</span>
+        </div>
+      </a>
+
+      <!-- Quick Actions / Admin & Cart -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Admin Toggle Button -->
+        <button id="toggleAdminBtn" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-theme-card border border-theme-border hover:border-brand-purple text-xs font-semibold text-gray-300 hover:text-white transition-all">
+          <i data-lucide="settings" class="w-4 h-4 text-brand-cyan"></i>
+          <span class="hidden md:inline">Painel Admin</span>
+        </button>
+
+        <button id="whatsappDirectBtn" class="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-theme-card border border-theme-border hover:border-emerald-500/50 text-xs font-semibold text-gray-300 hover:text-white transition-all">
+          <i data-lucide="message-square" class="w-4 h-4 text-emerald-400"></i>
+          Contato Direct
+        </button>
+
+        <button id="openCartBtn" class="relative px-4 py-2 rounded-xl text-white font-bold transition-all glow-orange flex items-center gap-2 bg-gradient-to-r from-brand-orange to-brand-darkOrange hover:brightness-110">
+          <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+          <span class="hidden sm:inline text-sm">Orçamento</span>
+          <span id="cartCountBadge" class="bg-white text-theme-bg text-xs font-black w-5 h-5 rounded-full flex items-center justify-center shadow-md">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    
+    <!-- Hero / Header Details -->
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-theme-card border border-brand-purple/40 text-brand-cyan text-xs font-bold mb-6 glow-purple">
+        <i data-lucide="sparkles" class="w-4 h-4 text-brand-orange"></i>
+        <span>Tecnologia em Impressão 3D & Prototipagem</span>
+      </div>
+
+      <div class="flex justify-center mb-6">
+        <div class="relative group">
+          <div class="absolute -inset-1 rounded-3xl bg-gradient-cube opacity-50 blur-lg group-hover:opacity-80 transition duration-500"></div>
+          <img src="image_1118a4.jpg" alt="PrintBros 3D" class="relative w-32 h-32 sm:w-40 sm:h-40 rounded-2xl border-2 border-theme-border object-cover shadow-2xl">
+        </div>
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4 leading-tight">
+        Catálogo Exclusivo <span class="text-gradient-logo">PrintBros 3D</span>
+      </h1>
+      <p id="heroSubtitle" class="text-gray-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+        Transformamos ideias digitais em produtos físicos de altíssima precisão. Escolha o item, personalize cores ou gravações e receba seu orçamento direto no WhatsApp!
+      </p>
+    </div>
+
+    <!-- ADMIN PANEL / CONFIGURATOR (Hidden by default) -->
+    <section id="adminPanel" class="hidden mb-12 bg-theme-card border-2 border-brand-purple rounded-3xl p-6 sm:p-8 space-y-8 shadow-2xl relative">
+      <div class="flex items-center justify-between border-b border-theme-border pb-4">
+        <div class="flex items-center gap-3">
+          <div class="p-2.5 rounded-xl text-white bg-brand-purple">
+            <i data-lucide="sliders" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-white">Painel de Gerenciamento PrintBros 3D</h2>
+            <p class="text-xs text-gray-400">Personalize dados da marca, ajuste o tema ou cadastre novos produtos no catálogo.</p>
+          </div>
+        </div>
+        <button id="closeAdminBtn" class="p-2 text-gray-400 hover:text-white rounded-xl border border-theme-border hover:bg-theme-border">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Tab Buttons for Admin -->
+      <div class="flex border-b border-theme-border gap-4 text-sm">
+        <button id="tabBrandingBtn" class="pb-3 border-b-2 font-bold transition-all text-brand-orange border-brand-orange">
+          1. Branding & Identidade
+        </button>
+        <button id="tabProductsBtn" class="pb-3 border-b-2 font-bold transition-all text-gray-400 border-transparent hover:text-white">
+          2. Produtos do Catálogo (<span id="adminProdCount">0</span>)
+        </button>
+      </div>
+
+      <!-- SECTION 1: BRANDING & THEME -->
+      <div id="adminBrandingSection" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-2">
+            <label class="block text-xs font-semibold text-gray-300">Nome da Empresa:</label>
+            <input type="text" id="adminBrandName" class="w-full px-4 py-2.5 bg-theme-bg border border-theme-border rounded-xl text-sm text-white focus:outline-none focus:border-brand-orange">
+          </div>
+
+          <div class="space-y-2">
+            <label class="block text-xs font-semibold text-gray-300">Slogan / Subtítulo:</label>
+            <input type="text" id="adminTagline" class="w-full px-4 py-2.5 bg-theme-bg border border-theme-border rounded-xl text-sm text-white focus:outline-none focus:border-brand-orange">
+          </div>
+
+          <div class="space-y-2">
+            <label class="block text-xs font-semibold text-gray-300">URL / Imagem da Logo:</label>
+            <input type="text" id="adminLogoUrl" class="w-full px-4 py-2.5 bg-theme-bg border border-theme-border rounded-xl text-sm text-white focus:outline-none focus:border-brand-orange">
+          </div>
+
+          <div class="space-y-2">
+            <label class="block text-xs font-semibold text-gray-300">Número do WhatsApp (com DDD):</label>
+            <input type="text" id="adminPhone" class="w-full px-4 py-2.5 bg-theme-bg border border-theme-border rounded-xl text-sm text-white focus:outline-none focus:border-brand-orange">
+          </div>
+        </div>
+
+        <!-- Color Palette Selection -->
+        <div class="space-y-3 pt-4 border-t border-theme-border">
+          <label class="block text-xs font-semibold text-gray-300">Paleta do Tema:</label>
+          <div class="flex flex-wrap gap-3">
+            <button type="button" onclick="setThemeColor('#FF9800', '#F57C00', '#9C27B0', '#00E5FF', '#12071B', '#1D0E2B')" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-theme-bg border-2 border-brand-orange text-xs text-white font-bold">
+              <span class="w-3.5 h-3.5 rounded-full bg-orange-500"></span>
+              <span class="w-3.5 h-3.5 rounded-full bg-purple-600"></span>
+              <span class="w-3.5 h-3.5 rounded-full bg-cyan-400"></span>
+              PrintBros Original (Logo oficial)
+            </button>
+            <button type="button" onclick="setThemeColor('#3B82F6', '#2563EB', '#1D4ED8', '#60A5FA', '#0F172A', '#1E293B')" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-theme-bg border border-theme-border hover:border-white text-xs text-gray-300">
+              <span class="w-4 h-4 rounded-full bg-blue-500 inline-block"></span> Blue Cyber
+            </button>
+            <button type="button" onclick="setThemeColor('#10B981', '#059669', '#047857', '#34D399', '#062016', '#0B3323')" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-theme-bg border border-theme-border hover:border-white text-xs text-gray-300">
+              <span class="w-4 h-4 rounded-full bg-emerald-500 inline-block"></span> Emerald Tech
+            </button>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-3 pt-4">
+          <button id="saveBrandingBtn" class="px-6 py-2.5 rounded-xl text-white font-bold text-sm bg-gradient-to-r from-brand-orange to-brand-darkOrange hover:brightness-110 transition-all glow-orange">
+            Salvar Alterações
+          </button>
+        </div>
+      </div>
+
+      <!-- SECTION 2: PRODUCTS MANAGER (CRUD) -->
+      <div id="adminProductsSection" class="hidden space-y-6">
+        <div class="flex justify-between items-center">
+          <h3 class="text-base font-bold text-white">Gestão de Produtos</h3>
+          <button id="openNewProductBtn" class="px-4 py-2 rounded-xl text-white font-bold text-xs flex items-center gap-2 bg-brand-purple hover:bg-brand-darkPurple transition-all">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            Adicionar Produto
+          </button>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-gray-300">
+            <thead class="bg-theme-bg text-gray-400 uppercase font-bold border-b border-theme-border">
+              <tr>
+                <th class="p-3">Imagem</th>
+                <th class="p-3">Nome do Produto</th>
+                <th class="p-3">Categoria</th>
+                <th class="p-3">Preço</th>
+                <th class="p-3 text-right">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="adminProductsTable" class="divide-y divide-theme-border">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pt-4 border-t border-theme-border flex justify-between items-center text-xs text-gray-400">
+          <span>Alterações salvas no seu navegador (localStorage).</span>
+          <button id="resetDefaultProductsBtn" class="text-red-400 hover:text-red-300 font-semibold underline">
+            Restaurar Produtos Padrão
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search & Filter Controls -->
+    <div class="space-y-6 mb-10">
+      <div class="relative max-w-xl mx-auto">
+        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-brand-cyan">
+          <i data-lucide="search" class="w-5 h-5"></i>
+        </div>
+        <input type="text" id="searchInput" placeholder="Busque por produtos: Troféu, Vaso, Suporte Gamer, Escudo..." 
+               class="w-full pl-11 pr-10 py-3.5 bg-theme-card border border-theme-border rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:border-brand-orange transition-all text-sm shadow-inner">
+        <button id="clearSearchBtn" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-white">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Categories Tabs -->
+      <div class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-2" id="categoryContainer">
+        <!-- Categories injected by JavaScript -->
+      </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <!-- Products rendered dynamically -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="hidden text-center py-16">
+      <div class="w-16 h-16 bg-theme-card rounded-2xl flex items-center justify-center mx-auto mb-4 border border-theme-border text-brand-orange">
+        <i data-lucide="search-x" class="w-8 h-8"></i>
+      </div>
+      <h3 class="text-lg font-bold text-white mb-1">Nenhum produto encontrado</h3>
+      <p class="text-sm text-gray-400">Tente outros termos de pesquisa ou troque a categoria.</p>
+      <button id="resetFiltersBtn" class="mt-4 px-4 py-2 bg-theme-card border border-theme-border hover:border-brand-orange text-brand-orange text-sm font-semibold rounded-xl transition-all">
+        Limpar Filtros
+      </button>
+    </div>
+
+  </main>
+
+  <footer class="bg-theme-card/60 border-t border-theme-border mt-16 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3.5">
+        <img src="image_1118a4.jpg" class="w-9 h-9 rounded-xl border border-theme-border object-cover" alt="PrintBros 3D">
+        <p class="text-sm text-gray-400">© 2026 <strong id="footerBrandName" class="text-white">PrintBros 3D</strong> - Impressão 3D de Alta Qualidade.</p>
+      </div>
+
+      <div class="flex items-center gap-6 text-xs text-gray-400">
+        <span class="flex items-center gap-1.5"><i data-lucide="layers" class="w-4 h-4 text-brand-orange"></i> PLA, PETG & Resina HD</span>
+        <span class="flex items-center gap-1.5"><i data-lucide="zap" class="w-4 h-4 text-brand-cyan"></i> Envio Rápido</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- PRODUCT CUSTOMIZATION MODAL FOR BUYER -->
+  <div id="productModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+    <div class="bg-theme-card border border-theme-border w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]">
+      
+      <div class="p-5 border-b border-theme-border flex items-center justify-between bg-theme-bg/50">
+        <div class="flex items-center gap-2">
+          <span id="modalCategoryBadge" class="text-xs px-2.5 py-1 rounded-md bg-theme-card text-brand-cyan border border-theme-border font-bold uppercase"></span>
+          <h3 id="modalTitle" class="text-lg font-bold text-white"></h3>
+        </div>
+        <button id="closeModalBtn" class="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-theme-border transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-6 flex-grow">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-theme-bg rounded-2xl p-4 flex flex-col items-center justify-center border border-theme-border relative group min-h-[200px]">
+            <img id="modalImage" src="" alt="" class="w-48 h-48 object-cover rounded-xl drop-shadow-2xl transition-transform duration-300 group-hover:scale-105">
+            <span id="modalPriceBadge" class="absolute bottom-3 right-3 bg-theme-card/90 border border-theme-border px-3 py-1 rounded-xl text-xs font-bold text-brand-orange"></span>
+          </div>
+
+          <div class="space-y-3">
+            <h4 class="text-xs uppercase font-bold text-brand-orange tracking-wider">Descrição Técnica</h4>
+            <p id="modalDescription" class="text-sm text-gray-300 leading-relaxed"></p>
+            
+            <div class="pt-2 border-t border-theme-border space-y-2 text-xs text-gray-400">
+              <div class="flex items-center gap-2">
+                <i data-lucide="box" class="w-4 h-4 text-brand-cyan"></i>
+                <span id="modalMaterial">Filamento de Alta Precisão (0.12mm a 0.20mm)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i data-lucide="clock" class="w-4 h-4 text-brand-orange"></i>
+                <span>Produção estimada: 2 a 4 dias úteis</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Customization Form -->
+        <div class="bg-theme-bg/60 p-5 rounded-2xl border border-theme-border space-y-4">
+          <h4 class="text-sm font-bold text-white flex items-center gap-2">
+            <i data-lucide="sliders" class="w-4 h-4 text-brand-cyan"></i>
+            Personalize seu Pedido
+          </h4>
+
+          <div class="space-y-2">
+            <label class="block text-xs font-medium text-gray-300">Cor do Filamento / Peça:</label>
+            <div id="colorOptions" class="flex flex-wrap gap-2"></div>
+          </div>
+
+          <div class="space-y-2">
+            <label for="customText" class="block text-xs font-medium text-gray-300">Nome / Gravação 3D (Opcional):</label>
+            <input type="text" id="customText" placeholder="Ex: Nome, Equipe, Logotipo ou Frase..." 
+                   class="w-full px-3.5 py-2.5 bg-theme-card border border-theme-border rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-orange">
+          </div>
+
+          <div class="space-y-2">
+            <label for="customNotes" class="block text-xs font-medium text-gray-300">Observações de Tamanho ou Detalhes Extras:</label>
+            <textarea id="customNotes" rows="2" placeholder="Ex: Quero com 20cm de altura, acabamento acetinado..." 
+                      class="w-full px-3.5 py-2.5 bg-theme-card border border-theme-border rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-orange resize-none"></textarea>
+          </div>
+
+          <div class="flex items-center justify-between pt-2">
+            <span class="text-xs font-medium text-gray-300">Quantidade:</span>
+            <div class="flex items-center bg-theme-card border border-theme-border rounded-xl">
+              <button id="decQtyBtn" class="p-2 text-gray-400 hover:text-white"><i data-lucide="minus" class="w-4 h-4"></i></button>
+              <span id="modalQtyDisplay" class="px-4 text-sm font-bold text-white">1</span>
+              <button id="incQtyBtn" class="p-2 text-gray-400 hover:text-white"><i data-lucide="plus" class="w-4 h-4"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-5 border-t border-theme-border bg-theme-bg/50 flex items-center justify-end gap-3">
+        <button id="cancelModalBtn" class="px-5 py-2.5 rounded-xl border border-theme-border text-gray-300 hover:bg-theme-border text-sm font-semibold">
+          Cancelar
+        </button>
+        <button id="addToCartBtn" class="px-6 py-2.5 rounded-xl text-white text-sm font-bold bg-gradient-to-r from-brand-orange to-brand-darkOrange hover:brightness-110 flex items-center gap-2 glow-orange">
+          <i data-lucide="plus-circle" class="w-4 h-4"></i>
+          Adicionar ao Orçamento
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN PRODUCT EDIT/CREATE MODAL -->
+  <div id="adminProductModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+    <div class="bg-theme-card border border-theme-border w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col">
+      <div class="p-5 border-b border-theme-border flex items-center justify-between bg-theme-bg/50">
+        <h3 id="adminProductModalTitle" class="text-base font-bold text-white">Cadastrar Novo Produto</h3>
+        <button id="closeAdminProductModalBtn" class="p-2 text-gray-400 hover:text-white rounded-xl">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="adminProductForm" class="p-6 space-y-4 text-xs overflow-y-auto max-h-[75vh]">
+        <input type="hidden" id="editProductId">
+
+        <div class="space-y-1.5">
+          <label class="font-semibold text-gray-300">Nome do Produto:</label>
+          <input type="text" id="prodInputName" required placeholder="Ex: Troféu Gamer Personalizado" class="w-full px-3.5 py-2 bg-theme-bg border border-theme-border rounded-xl text-white text-sm focus:border-brand-orange">
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div class="space-y-1.5">
+            <label class="font-semibold text-gray-300">Categoria:</label>
+            <select id="prodInputCategory" class="w-full px-3.5 py-2 bg-theme-bg border border-theme-border rounded-xl text-white text-sm focus:border-brand-orange">
+              <option value="trofeus">Futebol & Troféus</option>
+              <option value="decoracao">Decoração & Setup</option>
+              <option value="tecnicas">Peças Técnicas</option>
+              <option value="colecionaveis">Colecionáveis & Miniaturas</option>
+            </select>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="font-semibold text-gray-300">Preço Exibido (Texto):</label>
+            <input type="text" id="prodInputPriceText" required placeholder="Ex: R$ 85,00" class="w-full px-3.5 py-2 bg-theme-bg border border-theme-border rounded-xl text-white text-sm focus:border-brand-orange">
+          </div>
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="font-semibold text-gray-300">Preço Numérico (Para soma no carrinho):</label>
+          <input type="number" step="0.01" id="prodInputRawPrice" required placeholder="85.00" class="w-full px-3.5 py-2 bg-theme-bg border border-theme-border rounded-xl text-white text-sm focus:border-brand-orange">
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="font-semibold text-gray-300">URL da Imagem:</label>
+          <input type="text" id="prodInputImage" required placeholder="https://..." class="w-full px-3.5 py-2 bg-theme-bg border border-theme-border rounded-xl text-white text-sm focus:border-brand-orange">
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="font-semibold text-gray-300">Descrição Completa:</label>
+          <textarea id="prodInputDescription" rows="3" required class="w-full px-3.5 py-2 bg-theme-bg border border-theme-border rounded-xl text-white text-sm focus:border-brand-orange resize-none"></textarea>
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="font-semibold text-gray-300">Cores Disponíveis (separadas por vírgula):</label>
+          <input type="text" id="prodInputColors" placeholder="Laranja PrintBros, Roxo Neon, Preto Fosco" class="w-full px-3.5 py-2 bg-theme-bg border border-theme-border rounded-xl text-white text-sm focus:border-brand-orange">
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="font-semibold text-gray-300">Tags (separadas por vírgula):</label>
+          <input type="text" id="prodInputTags" placeholder="Geek, Troféu, Gamer" class="w-full px-3.5 py-2 bg-theme-bg border border-theme-border rounded-xl text-white text-sm focus:border-brand-orange">
+        </div>
+
+        <div class="pt-4 flex justify-end gap-3 border-t border-theme-border">
+          <button type="button" id="cancelAdminProductModalBtn" class="px-4 py-2 rounded-xl border border-theme-border text-gray-300">Cancelar</button>
+          <button type="submit" class="px-5 py-2 rounded-xl text-white font-bold bg-brand-orange hover:bg-brand-darkOrange">Salvar Produto</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- CART DRAWER -->
+  <div id="cartDrawer" class="fixed inset-0 z-50 hidden">
+    <div id="cartBackdrop" class="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+
+    <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+      <div id="cartPanel" class="w-screen max-w-md bg-theme-card border-l border-theme-border shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300">
+        
+        <div class="p-5 border-b border-theme-border flex items-center justify-between bg-theme-bg/50">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg text-brand-orange flex items-center justify-center border border-theme-border bg-theme-card">
+              <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+            </div>
+            <h3 class="text-base font-bold text-white">Sua Lista de Orçamento</h3>
+          </div>
+          <button id="closeCartBtn" class="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-theme-border transition-colors">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <div id="cartItemsContainer" class="p-5 overflow-y-auto space-y-4 flex-grow">
+          <!-- Populated dynamically -->
+        </div>
+
+        <div id="emptyCartView" class="hidden flex-col items-center justify-center h-full p-6 text-center">
+          <div class="w-16 h-16 rounded-full bg-theme-bg border border-theme-border flex items-center justify-center text-brand-orange mb-4">
+            <i data-lucide="shopping-cart" class="w-8 h-8"></i>
+          </div>
+          <p class="text-white font-bold mb-1">Seu carrinho está vazio</p>
+          <p class="text-xs text-gray-400">Escolha os produtos e adicione personalizações antes de enviar.</p>
+        </div>
+
+        <div class="p-5 border-t border-theme-border bg-theme-bg/50 space-y-4">
+          <div class="space-y-2">
+            <div class="flex justify-between text-xs text-gray-400">
+              <span>Total de Peças:</span>
+              <span id="cartTotalItems" class="text-white font-bold">0</span>
+            </div>
+            <div class="flex justify-between text-sm text-white">
+              <span>Estimativa do Pedido:</span>
+              <span id="cartTotalPrice" class="font-extrabold text-brand-cyan">R$ 0,00</span>
+            </div>
+          </div>
+
+          <button id="sendWhatsAppBtn" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm">
+            <i data-lucide="message-square" class="w-5 h-5"></i>
+            Enviar Pedido via WhatsApp
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 hidden translate-y-10 opacity-0 transition-all duration-300 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 border bg-theme-card border-brand-purple">
+    <i data-lucide="check-circle" class="w-5 h-5 text-brand-cyan"></i>
+    <span id="toastMessage" class="text-sm font-semibold">Mensagem aqui!</span>
+  </div>
+
+  <script>
+    // Initial Default Data matching image_1118a4.jpg branding
+    const DEFAULT_BRANDING = {
+      name: "PRINTBROS 3D",
+      tagline: "Manufatura Aditiva & Personalizações",
+      logoUrl: "image_1118a4.jpg",
+      phone: "5511999999999",
+      colors: {
+        orange: "#FF9800",
+        darkOrange: "#F57C00",
+        purple: "#9C27B0",
+        cyan: "#00E5FF",
+        bgMain: "#12071B",
+        bgCard: "#1D0E2B"
+      }
+    };
+
+    const DEFAULT_PRODUCTS = [
+      {
+        id: "pb1",
+        name: "Troféu Gamer Cubo Isométrico 3D",
+        category: "trofeus",
+        categoryLabel: "Futebol & Troféus",
+        price: "R$ 95,00",
+        rawPrice: 95.00,
+        tags: ["Troféu", "Gamer", "Cubo", "3D"],
+        image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=500&auto=format&fit=crop&q=80",
+        description: "Inspirado no design cubo geométrico da PrintBros 3D. Peça rica em detalhes para premiações de campeonatos e e-sports.",
+        colors: ["Laranja & Roxo PrintBros", "Dourado Metálico", "Cian Neon"]
+      },
+      {
+        id: "pb2",
+        name: "Escudo de Futebol Personalizado em Alto Relevo",
+        category: "trofeus",
+        categoryLabel: "Futebol & Troféus",
+        price: "R$ 70,00",
+        rawPrice: 70.00,
+        tags: ["Futebol", "Escudo", "Relevo"],
+        image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop&q=80",
+        description: "Escudo do seu time impresso em camadas em alto relevo com base articulada de mesa ou suporte de parede.",
+        colors: ["Cores Oficiais do Time", "Preto & Dourado", "Laranja & Preto"]
+      },
+      {
+        id: "pb3",
+        name: "Suporte Geométrico para Headset e Controle",
+        category: "decoracao",
+        categoryLabel: "Decoração & Setup",
+        price: "R$ 80,00",
+        rawPrice: 80.00,
+        tags: ["Setup", "Gamer", "Headset"],
+        image: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=500&auto=format&fit=crop&q=80",
+        description: "Design futurista e super resistente para organizar seu fone de ouvido e controle no seu setup de jogos.",
+        colors: ["Preto Fosco", "Roxo Neon", "Laranja Vibrante"]
+      },
+      {
+        id: "pb4",
+        name: "Vaso Geométrico Minimalista para Suculentas",
+        category: "decoracao",
+        categoryLabel: "Decoração & Setup",
+        price: "R$ 52,00",
+        rawPrice: 52.00,
+        tags: ["Decoração", "Vaso", "Design"],
+        image: "https://images.unsplash.com/photo-1615529182904-14819c35db37?w=500&auto=format&fit=crop&q=80",
+        description: "Vaso multifacetado impresso em polímero ecológico PLA. Perfeito para plantas e ambientes modernos.",
+        colors: ["Roxo PrintBros", "Branco Mármore", "Cian Glow"]
+      },
+      {
+        id: "pb5",
+        name: "Engrenagens e Reposição em PETG/ABS",
+        category: "tecnicas",
+        categoryLabel: "Peças Técnicas",
+        price: "R$ 40,00",
+        rawPrice: 40.00,
+        tags: ["Engenharia", "Peças", "Resistente"],
+        image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=500&auto=format&fit=crop&q=80",
+        description: "Prototipagem de componentes mecânicos funcionais e peças de alta resistência mecânica.",
+        colors: ["Preto Técnico", "Cinza Industrial", "PETG Transparente"]
+      },
+      {
+        id: "pb6",
+        name: "Figure Colecionável / Busto HD em Resina",
+        category: "colecionaveis",
+        categoryLabel: "Colecionáveis & Miniaturas",
+        price: "R$ 150,00",
+        rawPrice: 150.00,
+        tags: ["Resina", "HD", "Colecionável"],
+        image: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=500&auto=format&fit=crop&q=80",
+        description: "Miniaturas ultra detalhadas produzidas em resina HD para pintura ou acabamento artesanal.",
+        colors: ["Cinza Primer para Pintura", "Pintura Personalizada"]
+      }
+    ];
+
+    const CATEGORIES = [
+      { id: "todos", label: "Todos os Produtos", icon: "grid" },
+      { id: "trofeus", label: "Futebol & Troféus", icon: "award" },
+      { id: "decoracao", label: "Decoração & Setup", icon: "sparkles" },
+      { id: "tecnicas", label: "Peças Técnicas", icon: "cpu" },
+      { id: "colecionaveis", label: "Colecionáveis", icon: "smile" }
+    ];
+
+    // State Variables Persistent in LocalStorage
+    let branding = JSON.parse(localStorage.getItem('pb3d_branding_v2')) || DEFAULT_BRANDING;
+    let products = JSON.parse(localStorage.getItem('pb3d_products_v2')) || DEFAULT_PRODUCTS;
+    
+    let activeCategory = "todos";
+    let searchQuery = "";
+    let selectedProduct = null;
+    let selectedColor = "";
+    let modalQuantity = 1;
+    let cart = [];
+
+    window.addEventListener('DOMContentLoaded', () => {
+      applyBrandingUI();
+      renderCategories();
+      renderProducts();
+      renderAdminProductsTable();
+      setupEventListeners();
+      lucide.createIcons();
+    });
+
+    function applyBrandingUI() {
+      document.documentElement.style.setProperty('--brand-orange', branding.colors.orange || '#FF9800');
+      document.documentElement.style.setProperty('--brand-purple', branding.colors.purple || '#9C27B0');
+      document.documentElement.style.setProperty('--brand-cyan', branding.colors.cyan || '#00E5FF');
+      document.documentElement.style.setProperty('--bg-main', branding.colors.bgMain || '#12071B');
+      document.documentElement.style.setProperty('--bg-card', branding.colors.bgCard || '#1D0E2B');
+
+      document.getElementById('siteTitleTag').textContent = `${branding.name} - Catálogo Impressão 3D`;
+      document.getElementById('headerBrandName').innerHTML = `${branding.name.split(' ')[0] || 'PRINTBROS'} <span class="text-brand-cyan font-black">${branding.name.split(' ')[1] || '3D'}</span>`;
+      document.getElementById('headerTagline').textContent = branding.tagline;
+      document.getElementById('footerBrandName').textContent = branding.name;
+
+      const logoImg = document.getElementById('customLogoImg');
+      const logoIcon = document.getElementById('logoFallbackIcon');
+      if (branding.logoUrl && branding.logoUrl.trim() !== '') {
+        logoImg.src = branding.logoUrl;
+        logoImg.classList.remove('hidden');
+        logoIcon.classList.add('hidden');
+      } else {
+        logoImg.classList.add('hidden');
+        logoIcon.classList.remove('hidden');
+      }
+
+      document.getElementById('adminBrandName').value = branding.name;
+      document.getElementById('adminTagline').value = branding.tagline;
+      document.getElementById('adminLogoUrl').value = branding.logoUrl || '';
+      document.getElementById('adminPhone').value = branding.phone;
+    }
+
+    function setThemeColor(orange, darkOrange, purple, cyan, bgMain, bgCard) {
+      branding.colors = { orange, darkOrange, purple, cyan, bgMain, bgCard };
+      applyBrandingUI();
+      showToast("Cores alteradas no catálogo! Clique em Salvar para fixar.");
+    }
+
+    function saveBrandingFromAdmin() {
+      branding.name = document.getElementById('adminBrandName').value.trim() || DEFAULT_BRANDING.name;
+      branding.tagline = document.getElementById('adminTagline').value.trim() || DEFAULT_BRANDING.tagline;
+      branding.logoUrl = document.getElementById('adminLogoUrl').value.trim() || DEFAULT_BRANDING.logoUrl;
+      branding.phone = document.getElementById('adminPhone').value.trim() || DEFAULT_BRANDING.phone;
+
+      localStorage.setItem('pb3d_branding_v2', JSON.stringify(branding));
+      applyBrandingUI();
+      showToast("Configurações da PrintBros 3D salvas com sucesso!");
+    }
+
+    function renderCategories() {
+      const container = document.getElementById('categoryContainer');
+      container.innerHTML = CATEGORIES.map(cat => {
+        const isActive = activeCategory === cat.id;
+        const activeClasses = isActive 
+          ? "text-white bg-brand-purple border-brand-cyan glow-purple font-bold" 
+          : "bg-theme-card text-gray-400 hover:text-white border-theme-border hover:border-brand-orange";
+
+        return `
+          <button data-id="${cat.id}" class="category-btn flex items-center gap-2 px-4 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${activeClasses}">
+            <i data-lucide="${cat.icon}" class="w-4 h-4 text-brand-orange"></i>
+            ${cat.label}
+          </button>
+        `;
+      }).join('');
+
+      document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          activeCategory = e.currentTarget.getAttribute('data-id');
+          renderCategories();
+          renderProducts();
+          lucide.createIcons();
+        });
+      });
+    }
+
+    function renderProducts() {
+      const productGrid = document.getElementById('productGrid');
+      const emptyState = document.getElementById('emptyState');
+
+      const filtered = products.filter(product => {
+        const matchesCategory = activeCategory === 'todos' || product.category === activeCategory;
+        const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                              product.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                              product.description.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesCategory && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        productGrid.classList.add('hidden');
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      productGrid.classList.remove('hidden');
+
+      productGrid.innerHTML = filtered.map(product => `
+        <div class="bg-theme-card border border-theme-border rounded-2xl overflow-hidden hover:border-brand-purple transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between group">
+          <div>
+            <div class="relative bg-theme-bg p-4 flex items-center justify-center overflow-hidden h-52 border-b border-theme-border">
+              <img src="${product.image}" alt="${product.name}" 
+                   class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                   onerror="this.src='image_1118a4.jpg'">
+              
+              <span class="absolute top-3 left-3 bg-theme-card/90 backdrop-blur-md border border-theme-border text-[10px] uppercase font-bold text-brand-cyan px-2.5 py-1 rounded-lg">
+                ${product.categoryLabel || 'Item 3D'}
+              </span>
+            </div>
+
+            <div class="p-5 space-y-3">
+              <div class="flex flex-wrap gap-1.5">
+                ${product.tags.map(tag => `<span class="text-[10px] bg-theme-bg text-brand-orange px-2 py-0.5 rounded-md border border-theme-border">#${tag}</span>`).join('')}
+              </div>
+
+              <h3 class="text-base font-bold text-white group-hover:text-brand-cyan transition-colors leading-snug">
+                ${product.name}
+              </h3>
+
+              <p class="text-xs text-gray-400 line-clamp-2 leading-relaxed">
+                ${product.description}
+              </p>
+            </div>
+          </div>
+
+          <div class="p-5 pt-0 mt-auto flex items-center justify-between gap-2 border-t border-theme-border/50 pt-4">
+            <div>
+              <span class="block text-[10px] text-gray-400 uppercase tracking-wider font-medium">A partir de</span>
+              <span class="text-sm font-extrabold text-white">${product.price}</span>
+            </div>
+
+            <button onclick="openProductModal('${product.id}')"
+                    class="px-3.5 py-2 text-white text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 bg-gradient-to-r from-brand-orange to-brand-darkOrange hover:brightness-110 glow-orange">
+              <i data-lucide="sliders" class="w-3.5 h-3.5"></i>
+              Orçar
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      lucide.createIcons();
+    }
+
+    function renderAdminProductsTable() {
+      const tableBody = document.getElementById('adminProductsTable');
+      document.getElementById('adminProdCount').textContent = products.length;
+
+      tableBody.innerHTML = products.map(p => `
+        <tr class="hover:bg-theme-bg/50">
+          <td class="p-3">
+            <img src="${p.image}" class="w-10 h-10 object-cover rounded-lg border border-theme-border" onerror="this.src='image_1118a4.jpg'">
+          </td>
+          <td class="p-3 font-semibold text-white">${p.name}</td>
+          <td class="p-3 text-gray-400 uppercase text-[10px]">${p.category}</td>
+          <td class="p-3 font-bold text-brand-cyan">${p.price}</td>
+          <td class="p-3 text-right space-x-2">
+            <button onclick="editProductAdmin('${p.id}')" class="px-2.5 py-1 bg-theme-bg border border-theme-border hover:border-brand-orange text-gray-300 hover:text-white rounded-lg">
+              Editar
+            </button>
+            <button onclick="deleteProductAdmin('${p.id}')" class="px-2.5 py-1 bg-red-950/40 border border-red-800/50 text-red-400 hover:text-red-200 rounded-lg">
+              Excluir
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openAdminProductModal(productId = null) {
+      const modal = document.getElementById('adminProductModal');
+      const form = document.getElementById('adminProductForm');
+      form.reset();
+
+      if (productId) {
+        const p = products.find(prod => prod.id === productId);
+        if (p) {
+          document.getElementById('adminProductModalTitle').textContent = "Editar Produto";
+          document.getElementById('editProductId').value = p.id;
+          document.getElementById('prodInputName').value = p.name;
+          document.getElementById('prodInputCategory').value = p.category;
+          document.getElementById('prodInputPriceText').value = p.price;
+          document.getElementById('prodInputRawPrice').value = p.rawPrice;
+          document.getElementById('prodInputImage').value = p.image;
+          document.getElementById('prodInputDescription').value = p.description;
+          document.getElementById('prodInputColors').value = p.colors ? p.colors.join(', ') : '';
+          document.getElementById('prodInputTags').value = p.tags ? p.tags.join(', ') : '';
+        }
+      } else {
+        document.getElementById('adminProductModalTitle').textContent = "Cadastrar Novo Produto";
+        document.getElementById('editProductId').value = '';
+      }
+
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        modal.querySelector('div').classList.remove('scale-95');
+      }, 10);
+    }
+
+    function closeAdminProductModal() {
+      const modal = document.getElementById('adminProductModal');
+      modal.classList.add('opacity-0');
+      modal.querySelector('div').classList.add('scale-95');
+      setTimeout(() => modal.classList.add('hidden'), 300);
+    }
+
+    function saveProductAdmin(e) {
+      e.preventDefault();
+      const editId = document.getElementById('editProductId').value;
+      const categoryVal = document.getElementById('prodInputCategory').value;
+      const catObj = CATEGORIES.find(c => c.id === categoryVal);
+
+      const colorArray = document.getElementById('prodInputColors').value.split(',').map(s => s.trim()).filter(Boolean);
+      const tagArray = document.getElementById('prodInputTags').value.split(',').map(s => s.trim()).filter(Boolean);
+
+      const productData = {
+        id: editId || 'pb_' + Date.now(),
+        name: document.getElementById('prodInputName').value.trim(),
+        category: categoryVal,
+        categoryLabel: catObj ? catObj.label : 'Peça 3D',
+        price: document.getElementById('prodInputPriceText').value.trim(),
+        rawPrice: parseFloat(document.getElementById('prodInputRawPrice').value) || 0,
+        image: document.getElementById('prodInputImage').value.trim(),
+        description: document.getElementById('prodInputDescription').value.trim(),
+        colors: colorArray.length > 0 ? colorArray : ["Laranja PrintBros", "Roxo Neon", "Preto"],
+        tags: tagArray.length > 0 ? tagArray : ["3D", "PrintBros"]
+      };
+
+      if (editId) {
+        const index = products.findIndex(p => p.id === editId);
+        if (index !== -1) products[index] = productData;
+      } else {
+        products.push(productData);
+      }
+
+      localStorage.setItem('pb3d_products_v2', JSON.stringify(products));
+      renderProducts();
+      renderAdminProductsTable();
+      closeAdminProductModal();
+      showToast("Produto salvo no catálogo!");
+    }
+
+    function editProductAdmin(id) {
+      openAdminProductModal(id);
+    }
+
+    function deleteProductAdmin(id) {
+      if (confirm("Remover este produto do catálogo da PrintBros 3D?")) {
+        products = products.filter(p => p.id !== id);
+        localStorage.setItem('pb3d_products_v2', JSON.stringify(products));
+        renderProducts();
+        renderAdminProductsTable();
+        showToast("Produto excluído.");
+      }
+    }
+
+    function openProductModal(productId) {
+      selectedProduct = products.find(p => p.id === productId);
+      if (!selectedProduct) return;
+
+      selectedColor = selectedProduct.colors ? selectedProduct.colors[0] : "Padrão";
+      modalQuantity = 1;
+
+      document.getElementById('modalTitle').textContent = selectedProduct.name;
+      document.getElementById('modalCategoryBadge').textContent = selectedProduct.categoryLabel || selectedProduct.category;
+      document.getElementById('modalImage').src = selectedProduct.image;
+      document.getElementById('modalPriceBadge').textContent = selectedProduct.price;
+      document.getElementById('modalDescription').textContent = selectedProduct.description;
+      document.getElementById('customText').value = '';
+      document.getElementById('customNotes').value = '';
+      document.getElementById('modalQtyDisplay').textContent = modalQuantity;
+
+      const colorContainer = document.getElementById('colorOptions');
+      colorContainer.innerHTML = (selectedProduct.colors || ["Padrão"]).map((color, index) => {
+        const isSelected = index === 0;
+        return `
+          <button type="button" onclick="selectColor('${color}', this)" 
+                  class="color-opt-btn px-3 py-1.5 rounded-lg border text-xs font-semibold transition-all ${
+                    isSelected ? 'text-white bg-brand-purple border-brand-cyan' : 'bg-theme-card border-theme-border text-gray-400 hover:text-white'
+                  }">
+            ${color}
+          </button>
+        `;
+      }).join('');
+
+      const modal = document.getElementById('productModal');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        modal.querySelector('div').classList.remove('scale-95');
+      }, 10);
+    }
+
+    function selectColor(color, btnElement) {
+      selectedColor = color;
+      document.querySelectorAll('.color-opt-btn').forEach(btn => {
+        btn.classList.remove('bg-brand-purple', 'border-brand-cyan', 'text-white');
+        btn.classList.add('bg-theme-card', 'border-theme-border', 'text-gray-400');
+      });
+      btnElement.classList.remove('bg-theme-card', 'border-theme-border', 'text-gray-400');
+      btnElement.classList.add('bg-brand-purple', 'border-brand-cyan', 'text-white');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('productModal');
+      modal.classList.add('opacity-0');
+      modal.querySelector('div').classList.add('scale-95');
+      setTimeout(() => modal.classList.add('hidden'), 300);
+    }
+
+    function addToCart() {
+      if (!selectedProduct) return;
+
+      const item = {
+        cartItemId: Date.now().toString(),
+        productId: selectedProduct.id,
+        name: selectedProduct.name,
+        priceText: selectedProduct.price,
+        unitPrice: selectedProduct.rawPrice,
+        color: selectedColor,
+        customText: document.getElementById('customText').value.trim(),
+        notes: document.getElementById('customNotes').value.trim(),
+        quantity: modalQuantity,
+        image: selectedProduct.image
+      };
+
+      cart.push(item);
+      updateCartUI();
+      closeModal();
+      showToast("Item adicionado ao seu orçamento!");
+    }
+
+    function removeFromCart(cartItemId) {
+      cart = cart.filter(item => item.cartItemId !== cartItemId);
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const totalItemsCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+      document.getElementById('cartCountBadge').textContent = totalItemsCount;
+
+      const cartItemsContainer = document.getElementById('cartItemsContainer');
+      const emptyCartView = document.getElementById('emptyCartView');
+
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '';
+        cartItemsContainer.classList.add('hidden');
+        emptyCartView.classList.remove('hidden');
+        emptyCartView.classList.add('flex');
+        document.getElementById('cartTotalItems').textContent = '0';
+        document.getElementById('cartTotalPrice').textContent = 'R$ 0,00';
+        return;
+      }
+
+      emptyCartView.classList.add('hidden');
+      emptyCartView.classList.remove('flex');
+      cartItemsContainer.classList.remove('hidden');
+
+      const estimatedTotal = cart.reduce((sum, item) => sum + (item.unitPrice * item.quantity), 0);
+
+      cartItemsContainer.innerHTML = cart.map(item => `
+        <div class="bg-theme-bg p-4 rounded-2xl border border-theme-border space-y-3 relative group">
+          <button onclick="removeFromCart('${item.cartItemId}')" class="absolute top-3 right-3 text-gray-500 hover:text-red-400 p-1">
+            <i data-lucide="trash-2" class="w-4 h-4"></i>
+          </button>
+
+          <div class="flex items-center gap-3">
+            <img src="${item.image}" alt="" class="w-12 h-12 rounded-xl object-cover bg-theme-card border border-theme-border" onerror="this.src='image_1118a4.jpg'">
+            <div>
+              <h5 class="text-sm font-bold text-white pr-6">${item.name}</h5>
+              <p class="text-xs text-brand-orange font-bold">${item.priceText}</p>
+            </div>
+          </div>
+
+          <div class="text-xs text-gray-400 space-y-1 bg-theme-card/60 p-2.5 rounded-xl border border-theme-border/50">
+            <div><strong class="text-gray-300">Cor:</strong> ${item.color}</div>
+            ${item.customText ? `<div><strong class="text-gray-300">Gravação/Nome:</strong> "${item.customText}"</div>` : ''}
+            ${item.notes ? `<div><strong class="text-gray-300">Obs:</strong> ${item.notes}</div>` : ''}
+            <div><strong class="text-gray-300">Qtd:</strong> ${item.quantity} un</div>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('cartTotalItems').textContent = totalItemsCount;
+      document.getElementById('cartTotalPrice').textContent = estimatedTotal > 0 
+        ? `Aprox. R$ ${estimatedTotal.toFixed(2).replace('.', ',')}` 
+        : 'Sob Consulta';
+
+      lucide.createIcons();
+    }
+
+    function sendOrderToWhatsApp() {
+      if (cart.length === 0) {
+        showToast("Seu carrinho está vazio!");
+        return;
+      }
+
+      let message = `🚀 *SOLICITAÇÃO DE ORÇAMENTO - ${branding.name.toUpperCase()}*\n`;
+      message += `------------------------------------\n\n`;
+
+      cart.forEach((item, idx) => {
+        message += `*${idx + 1}. ${item.name}*\n`;
+        message += `• Quantidade: ${item.quantity}\n`;
+        message += `• Cor escolhida: ${item.color}\n`;
+        if (item.customText) message += `• Gravação/Nome 3D: "${item.customText}"\n`;
+        if (item.notes) message += `• Observações: ${item.notes}\n`;
+        message += `• Ref. Preço: ${item.priceText}\n\n`;
+      });
+
+      message += `------------------------------------\n`;
+      message += `Olá equipe ${branding.name}! Montei este pedido pelo catálogo. Gostaria de confirmar prazo e valor de envio.`;
+
+      const encodedMessage = encodeURIComponent(message);
+      const whatsappUrl = `https://wa.me/${branding.phone}?text=${encodedMessage}`;
+
+      window.open(whatsappUrl, '_blank');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMessage');
+      toastMsg.textContent = msg;
+
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-10', 'opacity-0');
+      }, 10);
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-10', 'opacity-0');
+        setTimeout(() => toast.classList.add('hidden'), 300);
+      }, 3000);
+    }
+
+    function setupEventListeners() {
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value;
+        if (searchQuery.length > 0) clearSearchBtn.classList.remove('hidden');
+        else clearSearchBtn.classList.add('hidden');
+        renderProducts();
+      });
+
+      clearSearchBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchQuery = '';
+        clearSearchBtn.classList.add('hidden');
+        renderProducts();
+      });
+
+      document.getElementById('resetFiltersBtn').addEventListener('click', () => {
+        searchInput.value = '';
+        searchQuery = '';
+        activeCategory = 'todos';
+        clearSearchBtn.classList.add('hidden');
+        renderCategories();
+        renderProducts();
+      });
+
+      // Admin Controls
+      const adminPanel = document.getElementById('adminPanel');
+      document.getElementById('toggleAdminBtn').addEventListener('click', () => {
+        adminPanel.classList.toggle('hidden');
+        if (!adminPanel.classList.contains('hidden')) {
+          adminPanel.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+      document.getElementById('closeAdminBtn').addEventListener('click', () => adminPanel.classList.add('hidden'));
+
+      // Admin Tabs
+      const tabBrandingBtn = document.getElementById('tabBrandingBtn');
+      const tabProductsBtn = document.getElementById('tabProductsBtn');
+      const brandingSec = document.getElementById('adminBrandingSection');
+      const productsSec = document.getElementById('adminProductsSection');
+
+      tabBrandingBtn.addEventListener('click', () => {
+        brandingSec.classList.remove('hidden');
+        productsSec.classList.add('hidden');
+        tabBrandingBtn.className = "pb-3 border-b-2 font-bold transition-all text-brand-orange border-brand-orange";
+        tabProductsBtn.className = "pb-3 border-b-2 font-bold transition-all text-gray-400 border-transparent hover:text-white";
+      });
+
+      tabProductsBtn.addEventListener('click', () => {
+        productsSec.classList.remove('hidden');
+        brandingSec.classList.add('hidden');
+        tabProductsBtn.className = "pb-3 border-b-2 font-bold transition-all text-brand-orange border-brand-orange";
+        tabBrandingBtn.className = "pb-3 border-b-2 font-bold transition-all text-gray-400 border-transparent hover:text-white";
+      });
+
+      document.getElementById('saveBrandingBtn').addEventListener('click', saveBrandingFromAdmin);
+      document.getElementById('openNewProductBtn').addEventListener('click', () => openAdminProductModal());
+      document.getElementById('closeAdminProductModalBtn').addEventListener('click', closeAdminProductModal);
+      document.getElementById('cancelAdminProductModalBtn').addEventListener('click', closeAdminProductModal);
+      document.getElementById('adminProductForm').addEventListener('submit', saveProductAdmin);
+
+      document.getElementById('resetDefaultProductsBtn').addEventListener('click', () => {
+        if (confirm("Deseja restaurar a lista inicial de produtos padrão da PrintBros 3D?")) {
+          products = DEFAULT_PRODUCTS;
+          localStorage.removeItem('pb3d_products_v2');
+          renderProducts();
+          renderAdminProductsTable();
+          showToast("Produtos padrão restaurados!");
+        }
+      });
+
+      // Buyer Modal Controls
+      document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+      document.getElementById('cancelModalBtn').addEventListener('click', closeModal);
+      document.getElementById('addToCartBtn').addEventListener('click', addToCart);
+
+      document.getElementById('incQtyBtn').addEventListener('click', () => {
+        modalQuantity++;
+        document.getElementById('modalQtyDisplay').textContent = modalQuantity;
+      });
+
+      document.getElementById('decQtyBtn').addEventListener('click', () => {
+        if (modalQuantity > 1) {
+          modalQuantity--;
+          document.getElementById('modalQtyDisplay').textContent = modalQuantity;
+        }
+      });
+
+      // Cart Controls
+      const cartDrawer = document.getElementById('cartDrawer');
+      const cartPanel = document.getElementById('cartPanel');
+      const cartBackdrop = document.getElementById('cartBackdrop');
+
+      const openCart = () => {
+        cartDrawer.classList.remove('hidden');
+        setTimeout(() => {
+          cartBackdrop.classList.remove('opacity-0');
+          cartPanel.classList.remove('translate-x-full');
+        }, 10);
+      };
+
+      const closeCart = () => {
+        cartBackdrop.classList.add('opacity-0');
+        cartPanel.classList.add('translate-x-full');
+        setTimeout(() => cartDrawer.classList.add('hidden'), 300);
+      };
+
+      document.getElementById('openCartBtn').addEventListener('click', openCart);
+      document.getElementById('closeCartBtn').addEventListener('click', closeCart);
+      cartBackdrop.addEventListener('click', closeCart);
+
+      document.getElementById('sendWhatsAppBtn').addEventListener('click', sendOrderToWhatsApp);
+      document.getElementById('whatsappDirectBtn').addEventListener('click', () => {
+        window.open(`https://wa.me/${branding.phone}?text=Olá!%20Vim%20pelo%20site%20da%20PrintBros%203D%20e%20gostaria%20de%20tirar%20uma%20dúvida.`, '_blank');
+      });
+    }
+  </script>
+</body>
+</html>
