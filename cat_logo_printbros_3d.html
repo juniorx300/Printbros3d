@@ -125,7 +125,7 @@
 
         <button id="openCartBtn" class="relative px-4 py-2 rounded-xl text-white font-bold transition-all glow-orange flex items-center gap-2 bg-gradient-to-r from-brand-orange to-brand-darkOrange hover:brightness-110">
           <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-          <span class="hidden sm:inline text-sm">Orçamento</span>
+          <span class="text-sm">Orçamento</span>
           <span id="cartCountBadge" class="bg-white text-theme-bg text-xs font-black w-5 h-5 rounded-full flex items-center justify-center shadow-md">0</span>
         </button>
       </div>
@@ -367,19 +367,23 @@
           </h4>
 
           <div class="space-y-2">
-            <label class="block text-xs font-medium text-gray-300">Cor do Filamento / Peça:</label>
-            <div id="colorOptions" class="flex flex-wrap gap-2"></div>
+            <label class="block text-xs font-medium text-gray-300">Tamanho:</label>
+            <div id="sizeOptions" class="flex flex-wrap gap-2"></div>
           </div>
 
           <div class="space-y-2">
             <label for="customText" class="block text-xs font-medium text-gray-300">Nome / Gravação 3D (Opcional):</label>
             <input type="text" id="customText" placeholder="Ex: Nome, Equipe, Logotipo ou Frase..." 
                    class="w-full px-3.5 py-2.5 bg-theme-card border border-theme-border rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-orange">
+            <label class="flex items-center gap-2 pt-1 cursor-pointer select-none">
+              <input type="checkbox" id="customTextBaseOpt" class="w-4 h-4 rounded accent-brand-orange">
+              <span class="text-xs text-gray-300">Adicionar nome com base <span class="text-brand-orange font-bold">(+ R$ 7,00)</span></span>
+            </label>
           </div>
 
           <div class="space-y-2">
-            <label for="customNotes" class="block text-xs font-medium text-gray-300">Observações de Tamanho ou Detalhes Extras:</label>
-            <textarea id="customNotes" rows="2" placeholder="Ex: Quero com 20cm de altura, acabamento acetinado..." 
+            <label for="customNotes" class="block text-xs font-medium text-gray-300">Observações ou Detalhes Extras:</label>
+            <textarea id="customNotes" rows="2" placeholder="Ex: Acabamento acetinado, embalagem para presente..." 
                       class="w-full px-3.5 py-2.5 bg-theme-card border border-theme-border rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-orange resize-none"></textarea>
           </div>
 
@@ -435,15 +439,12 @@
             </select>
           </div>
 
-          <div class="space-y-1.5">
-            <label class="font-semibold text-gray-300">Preço Exibido (Texto):</label>
-            <input type="text" id="prodInputPriceText" required placeholder="Ex: R$ 85,00" class="w-full px-3.5 py-2 bg-theme-bg border border-theme-border rounded-xl text-white text-sm focus:border-brand-orange">
-          </div>
         </div>
 
         <div class="space-y-1.5">
-          <label class="font-semibold text-gray-300">Preço Numérico (Para soma no carrinho):</label>
-          <input type="number" step="0.01" id="prodInputRawPrice" required placeholder="85.00" class="w-full px-3.5 py-2 bg-theme-bg border border-theme-border rounded-xl text-white text-sm focus:border-brand-orange">
+          <label class="font-semibold text-gray-300">Tamanhos e Preços (formato Tamanho:Preço, separados por vírgula):</label>
+          <input type="text" id="prodInputSizes" required placeholder="12cm:29.90, 18cm:59.90, 23cm:79.90" class="w-full px-3.5 py-2 bg-theme-bg border border-theme-border rounded-xl text-white text-sm focus:border-brand-orange">
+          <p class="text-[10px] text-gray-500">O menor preço informado é exibido em destaque no card do produto.</p>
         </div>
 
         <div class="space-y-1.5">
@@ -454,11 +455,6 @@
         <div class="space-y-1.5">
           <label class="font-semibold text-gray-300">Descrição Completa:</label>
           <textarea id="prodInputDescription" rows="3" required class="w-full px-3.5 py-2 bg-theme-bg border border-theme-border rounded-xl text-white text-sm focus:border-brand-orange resize-none"></textarea>
-        </div>
-
-        <div class="space-y-1.5">
-          <label class="font-semibold text-gray-300">Cores Disponíveis (separadas por vírgula):</label>
-          <input type="text" id="prodInputColors" placeholder="Laranja PrintBros, Roxo Neon, Preto Fosco" class="w-full px-3.5 py-2 bg-theme-bg border border-theme-border rounded-xl text-white text-sm focus:border-brand-orange">
         </div>
 
         <div class="space-y-1.5">
@@ -550,66 +546,63 @@
       }
     };
 
+    // Tamanhos e preços padrão aplicados a todo o catálogo
+    const DEFAULT_SIZES = [
+      { label: "12cm", price: "R$ 29,90", rawPrice: 29.90 },
+      { label: "18cm", price: "R$ 59,90", rawPrice: 59.90 },
+      { label: "23cm", price: "R$ 79,90", rawPrice: 79.90 }
+    ];
+
     const DEFAULT_PRODUCTS = [
       {
         id: "pb1",
         name: "Luffy Criança",
         category: "colecionaveis",
         categoryLabel: "Colecionáveis & Miniaturas",
-        price: "R$ 120,00",
-        rawPrice: 120.00,
-        tags: ["One Piece", "Anime", "Colecionável", "15cm"],
+        tags: ["One Piece", "Anime", "Colecionável"],
         image: "produtos/luffy.jpg",
-        description: "Figure do Monkey D. Luffy criança, com chapéu de palha, pintura à mão em detalhes e acabamento fosco. Peça de 15cm, ideal para fãs de One Piece.",
-        colors: ["Pintura Padrão (como na foto)", "Sem Pintura (PLA Natural)"]
+        description: "Figure do Monkey D. Luffy criança, com chapéu de palha, pintura à mão em detalhes e acabamento fosco. Disponível em 3 tamanhos, ideal para fãs de One Piece.",
+        sizes: DEFAULT_SIZES
       },
       {
         id: "pb2",
         name: "Kratos",
         category: "colecionaveis",
         categoryLabel: "Colecionáveis & Miniaturas",
-        price: "R$ 130,00",
-        rawPrice: 130.00,
-        tags: ["God of War", "Game", "Colecionável", "15cm"],
+        tags: ["God of War", "Game", "Colecionável"],
         image: "produtos/kratos.jpg",
-        description: "Figure de Kratos com machado Leviathan destacável, pintura detalhada nas tatuagens e armadura. Peça de 15cm, altíssimo nível de detalhe.",
-        colors: ["Pintura Padrão (como na foto)", "Sem Pintura (PLA Natural)"]
+        description: "Figure de Kratos com machado Leviathan destacável, pintura detalhada nas tatuagens e armadura. Disponível em 3 tamanhos, altíssimo nível de detalhe.",
+        sizes: DEFAULT_SIZES
       },
       {
         id: "pb3",
         name: "Dragão (Fúria da Noite)",
         category: "colecionaveis",
         categoryLabel: "Colecionáveis & Miniaturas",
-        price: "R$ 110,00",
-        rawPrice: 110.00,
-        tags: ["Dragão", "Articulado", "Colecionável", "15cm"],
+        tags: ["Dragão", "Articulado", "Colecionável"],
         image: "produtos/dragao.jpg",
-        description: "Dragão preto articulado com olhos verdes, asas móveis e corpo flexível impresso sem necessidade de montagem. Peça de 15cm.",
-        colors: ["Preto Fosco (como na foto)", "Sem Pintura (PLA Natural)"]
+        description: "Dragão preto articulado com olhos verdes, asas móveis e corpo flexível impresso sem necessidade de montagem. Disponível em 3 tamanhos.",
+        sizes: DEFAULT_SIZES
       },
       {
         id: "pb4",
         name: "Homem-Aranha",
         category: "colecionaveis",
         categoryLabel: "Colecionáveis & Miniaturas",
-        price: "R$ 125,00",
-        rawPrice: 125.00,
-        tags: ["Marvel", "Herói", "Colecionável", "15cm"],
+        tags: ["Marvel", "Herói", "Colecionável"],
         image: "produtos/homem-aranha.jpg",
-        description: "Figure do Homem-Aranha em pose de ação agachado, com textura de teia detalhada e pintura vermelho/azul. Peça de 15cm.",
-        colors: ["Pintura Padrão (como na foto)", "Sem Pintura (PLA Natural)"]
+        description: "Figure do Homem-Aranha em pose de ação agachado, com textura de teia detalhada e pintura vermelho/azul. Disponível em 3 tamanhos.",
+        sizes: DEFAULT_SIZES
       },
       {
         id: "pb5",
         name: "Pikachu",
         category: "colecionaveis",
         categoryLabel: "Colecionáveis & Miniaturas",
-        price: "R$ 100,00",
-        rawPrice: 100.00,
-        tags: ["Pokémon", "Fofo", "Colecionável", "15cm"],
+        tags: ["Pokémon", "Fofo", "Colecionável"],
         image: "produtos/pikachu.jpg",
-        description: "Pikachu animado com bochechas vermelhas e pintura amarela vibrante. Peça de 15cm, perfeita para presente ou decoração.",
-        colors: ["Pintura Padrão (como na foto)", "Sem Pintura (PLA Natural)"]
+        description: "Pikachu animado com bochechas vermelhas e pintura amarela vibrante. Disponível em 3 tamanhos, perfeito para presente ou decoração.",
+        sizes: DEFAULT_SIZES
       }
     ];
 
@@ -628,7 +621,7 @@
     let activeCategory = "todos";
     let searchQuery = "";
     let selectedProduct = null;
-    let selectedColor = "";
+    let selectedSize = null;
     let modalQuantity = 1;
     let cart = [];
 
@@ -685,6 +678,10 @@
       localStorage.setItem('pb3d_branding_v2', JSON.stringify(branding));
       applyBrandingUI();
       showToast("Configurações da PrintBros 3D salvas com sucesso!");
+    }
+
+    function getMinSize(product) {
+      return product.sizes.reduce((min, s) => s.rawPrice < min.rawPrice ? s : min, product.sizes[0]);
     }
 
     function renderCategories() {
@@ -765,7 +762,7 @@
           <div class="p-5 pt-0 mt-auto flex items-center justify-between gap-2 border-t border-theme-border/50 pt-4">
             <div>
               <span class="block text-[10px] text-gray-400 uppercase tracking-wider font-medium">A partir de</span>
-              <span class="text-sm font-extrabold text-white">${product.price}</span>
+              <span class="text-sm font-extrabold text-white">${getMinSize(product).price}</span>
             </div>
 
             <button onclick="openProductModal('${product.id}')"
@@ -791,7 +788,7 @@
           </td>
           <td class="p-3 font-semibold text-white">${p.name}</td>
           <td class="p-3 text-gray-400 uppercase text-[10px]">${p.category}</td>
-          <td class="p-3 font-bold text-brand-cyan">${p.price}</td>
+          <td class="p-3 font-bold text-brand-cyan">A partir de ${getMinSize(p).price}</td>
           <td class="p-3 text-right space-x-2">
             <button onclick="editProductAdmin('${p.id}')" class="px-2.5 py-1 bg-theme-bg border border-theme-border hover:border-brand-orange text-gray-300 hover:text-white rounded-lg">
               Editar
@@ -816,11 +813,9 @@
           document.getElementById('editProductId').value = p.id;
           document.getElementById('prodInputName').value = p.name;
           document.getElementById('prodInputCategory').value = p.category;
-          document.getElementById('prodInputPriceText').value = p.price;
-          document.getElementById('prodInputRawPrice').value = p.rawPrice;
+          document.getElementById('prodInputSizes').value = (p.sizes || []).map(s => `${s.label}:${s.rawPrice.toFixed(2)}`).join(', ');
           document.getElementById('prodInputImage').value = p.image;
           document.getElementById('prodInputDescription').value = p.description;
-          document.getElementById('prodInputColors').value = p.colors ? p.colors.join(', ') : '';
           document.getElementById('prodInputTags').value = p.tags ? p.tags.join(', ') : '';
         }
       } else {
@@ -848,19 +843,23 @@
       const categoryVal = document.getElementById('prodInputCategory').value;
       const catObj = CATEGORIES.find(c => c.id === categoryVal);
 
-      const colorArray = document.getElementById('prodInputColors').value.split(',').map(s => s.trim()).filter(Boolean);
       const tagArray = document.getElementById('prodInputTags').value.split(',').map(s => s.trim()).filter(Boolean);
+
+      const sizesInput = document.getElementById('prodInputSizes').value;
+      const sizeArray = sizesInput.split(',').map(chunk => {
+        const [label, priceStr] = chunk.split(':').map(s => s.trim());
+        const rawPrice = parseFloat((priceStr || '0').replace(',', '.')) || 0;
+        return label ? { label, rawPrice, price: 'R$ ' + rawPrice.toFixed(2).replace('.', ',') } : null;
+      }).filter(Boolean);
 
       const productData = {
         id: editId || 'pb_' + Date.now(),
         name: document.getElementById('prodInputName').value.trim(),
         category: categoryVal,
         categoryLabel: catObj ? catObj.label : 'Peça 3D',
-        price: document.getElementById('prodInputPriceText').value.trim(),
-        rawPrice: parseFloat(document.getElementById('prodInputRawPrice').value) || 0,
         image: document.getElementById('prodInputImage').value.trim(),
         description: document.getElementById('prodInputDescription').value.trim(),
-        colors: colorArray.length > 0 ? colorArray : ["Laranja PrintBros", "Roxo Neon", "Preto"],
+        sizes: sizeArray.length > 0 ? sizeArray : DEFAULT_SIZES,
         tags: tagArray.length > 0 ? tagArray : ["3D", "PrintBros"]
       };
 
@@ -896,27 +895,29 @@
       selectedProduct = products.find(p => p.id === productId);
       if (!selectedProduct) return;
 
-      selectedColor = selectedProduct.colors ? selectedProduct.colors[0] : "Padrão";
+      const sizes = selectedProduct.sizes && selectedProduct.sizes.length ? selectedProduct.sizes : [{ label: "Único", price: "Sob Consulta", rawPrice: 0 }];
+      selectedSize = getMinSize({ sizes });
       modalQuantity = 1;
 
       document.getElementById('modalTitle').textContent = selectedProduct.name;
       document.getElementById('modalCategoryBadge').textContent = selectedProduct.categoryLabel || selectedProduct.category;
       document.getElementById('modalImage').src = selectedProduct.image;
-      document.getElementById('modalPriceBadge').textContent = selectedProduct.price;
+      document.getElementById('modalPriceBadge').textContent = selectedSize.price;
       document.getElementById('modalDescription').textContent = selectedProduct.description;
       document.getElementById('customText').value = '';
+      document.getElementById('customTextBaseOpt').checked = false;
       document.getElementById('customNotes').value = '';
       document.getElementById('modalQtyDisplay').textContent = modalQuantity;
 
-      const colorContainer = document.getElementById('colorOptions');
-      colorContainer.innerHTML = (selectedProduct.colors || ["Padrão"]).map((color, index) => {
-        const isSelected = index === 0;
+      const sizeContainer = document.getElementById('sizeOptions');
+      sizeContainer.innerHTML = sizes.map((size) => {
+        const isSelected = size.label === selectedSize.label;
         return `
-          <button type="button" onclick="selectColor('${color}', this)" 
-                  class="color-opt-btn px-3 py-1.5 rounded-lg border text-xs font-semibold transition-all ${
+          <button type="button" onclick="selectSize('${size.label}', this)" 
+                  class="size-opt-btn px-3 py-1.5 rounded-lg border text-xs font-semibold transition-all ${
                     isSelected ? 'text-white bg-brand-purple border-brand-cyan' : 'bg-theme-card border-theme-border text-gray-400 hover:text-white'
                   }">
-            ${color}
+            ${size.label} <span class="opacity-80">· ${size.price}</span>
           </button>
         `;
       }).join('');
@@ -929,9 +930,10 @@
       }, 10);
     }
 
-    function selectColor(color, btnElement) {
-      selectedColor = color;
-      document.querySelectorAll('.color-opt-btn').forEach(btn => {
+    function selectSize(sizeLabel, btnElement) {
+      selectedSize = selectedProduct.sizes.find(s => s.label === sizeLabel) || selectedSize;
+      document.getElementById('modalPriceBadge').textContent = selectedSize.price;
+      document.querySelectorAll('.size-opt-btn').forEach(btn => {
         btn.classList.remove('bg-brand-purple', 'border-brand-cyan', 'text-white');
         btn.classList.add('bg-theme-card', 'border-theme-border', 'text-gray-400');
       });
@@ -947,15 +949,21 @@
     }
 
     function addToCart() {
-      if (!selectedProduct) return;
+      if (!selectedProduct || !selectedSize) return;
+
+      const wantsBase = document.getElementById('customTextBaseOpt').checked;
+      const baseFee = 7.00;
+      const unitPrice = selectedSize.rawPrice + (wantsBase ? baseFee : 0);
+      const priceText = wantsBase ? `${selectedSize.price} + Base (R$ 7,00)` : selectedSize.price;
 
       const item = {
         cartItemId: Date.now().toString(),
         productId: selectedProduct.id,
         name: selectedProduct.name,
-        priceText: selectedProduct.price,
-        unitPrice: selectedProduct.rawPrice,
-        color: selectedColor,
+        priceText: priceText,
+        unitPrice: unitPrice,
+        size: selectedSize.label,
+        includeBase: wantsBase,
         customText: document.getElementById('customText').value.trim(),
         notes: document.getElementById('customNotes').value.trim(),
         quantity: modalQuantity,
@@ -1011,8 +1019,8 @@
           </div>
 
           <div class="text-xs text-gray-400 space-y-1 bg-theme-card/60 p-2.5 rounded-xl border border-theme-border/50">
-            <div><strong class="text-gray-300">Cor:</strong> ${item.color}</div>
-            ${item.customText ? `<div><strong class="text-gray-300">Gravação/Nome:</strong> "${item.customText}"</div>` : ''}
+            <div><strong class="text-gray-300">Tamanho:</strong> ${item.size}</div>
+            ${item.customText ? `<div><strong class="text-gray-300">Gravação/Nome:</strong> "${item.customText}"${item.includeBase ? ' <span class="text-brand-orange">(com base +R$ 7,00)</span>' : ''}</div>` : ''}
             ${item.notes ? `<div><strong class="text-gray-300">Obs:</strong> ${item.notes}</div>` : ''}
             <div><strong class="text-gray-300">Qtd:</strong> ${item.quantity} un</div>
           </div>
@@ -1039,8 +1047,8 @@
       cart.forEach((item, idx) => {
         message += `*${idx + 1}. ${item.name}*\n`;
         message += `• Quantidade: ${item.quantity}\n`;
-        message += `• Cor escolhida: ${item.color}\n`;
-        if (item.customText) message += `• Gravação/Nome 3D: "${item.customText}"\n`;
+        message += `• Tamanho: ${item.size}\n`;
+        if (item.customText) message += `• Gravação/Nome 3D: "${item.customText}"${item.includeBase ? ' (com base +R$ 7,00)' : ''}\n`;
         if (item.notes) message += `• Observações: ${item.notes}\n`;
         message += `• Ref. Preço: ${item.priceText}\n\n`;
       });
