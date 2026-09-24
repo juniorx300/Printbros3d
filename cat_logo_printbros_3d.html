@@ -101,7 +101,7 @@
       <!-- Logo & Branding Header -->
       <a href="#" class="flex items-center gap-3.5 group">
         <div id="logoContainer" class="w-12 h-12 rounded-2xl bg-theme-card border border-theme-border flex items-center justify-center p-1 glow-purple group-hover:scale-105 transition-all duration-300 overflow-hidden">
-          <img id="customLogoImg" src="produtos/image_1118a4.jpg" class="w-full h-full object-cover rounded-xl" alt="PrintBros 3D Logo" onerror="this.classList.add('hidden'); document.getElementById('logoFallbackIcon').classList.remove('hidden');">
+          <img id="customLogoImg" src="logo.jpg" class="w-full h-full object-cover rounded-xl" alt="PrintBros 3D Logo" onerror="this.classList.add('hidden'); document.getElementById('logoFallbackIcon').classList.remove('hidden');">
           <i data-lucide="box" id="logoFallbackIcon" class="hidden w-7 h-7 text-brand-orange"></i>
         </div>
         <div>
@@ -144,7 +144,7 @@
       <div class="flex justify-center mb-6">
         <div class="relative group">
           <div class="absolute -inset-1 rounded-3xl bg-gradient-cube opacity-50 blur-lg group-hover:opacity-80 transition duration-500"></div>
-          <img src="image_1118a4.jpg" alt="PrintBros 3D" class="relative w-32 h-32 sm:w-40 sm:h-40 rounded-2xl border-2 border-theme-border object-cover shadow-2xl">
+          <img src="logo.jpg" alt="PrintBros 3D" class="relative w-32 h-32 sm:w-40 sm:h-40 rounded-2xl border-2 border-theme-border object-cover shadow-2xl">
         </div>
       </div>
 
@@ -310,7 +310,7 @@
   <footer class="bg-theme-card/60 border-t border-theme-border mt-16 py-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-3.5">
-        <img src="image_1118a4.jpg" class="w-9 h-9 rounded-xl border border-theme-border object-cover" alt="PrintBros 3D">
+        <img src="logo.jpg" class="w-9 h-9 rounded-xl border border-theme-border object-cover" alt="PrintBros 3D">
         <p class="text-sm text-gray-400">© 2026 <strong id="footerBrandName" class="text-white">PrintBros 3D</strong> - Impressão 3D de Alta Qualidade.</p>
       </div>
 
@@ -530,11 +530,11 @@
   </div>
 
   <script>
-    // Initial Default Data matching image_1118a4.jpg branding
+    // Initial Default Data matching logo.jpg branding
     const DEFAULT_BRANDING = {
       name: "PRINTBROS 3D",
       tagline: "🛠️ Transformamos suas ideias em peças 3D",
-      logoUrl: "image_1118a4.jpg",
+      logoUrl: "logo.jpg",
       phone: "5581984658767",
       colors: {
         orange: "#FF9800",
@@ -737,7 +737,7 @@
             <div class="relative bg-theme-bg p-4 flex items-center justify-center overflow-hidden h-52 border-b border-theme-border">
               <img src="${product.image}" alt="${product.name}" 
                    class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
-                   onerror="this.src='image_1118a4.jpg'">
+                   onerror="this.src='logo.jpg'">
               
               <span class="absolute top-3 left-3 bg-theme-card/90 backdrop-blur-md border border-theme-border text-[10px] uppercase font-bold text-brand-cyan px-2.5 py-1 rounded-lg">
                 ${product.categoryLabel || 'Item 3D'}
@@ -784,7 +784,7 @@
       tableBody.innerHTML = products.map(p => `
         <tr class="hover:bg-theme-bg/50">
           <td class="p-3">
-            <img src="${p.image}" class="w-10 h-10 object-cover rounded-lg border border-theme-border" onerror="this.src='image_1118a4.jpg'">
+            <img src="${p.image}" class="w-10 h-10 object-cover rounded-lg border border-theme-border" onerror="this.src='logo.jpg'">
           </td>
           <td class="p-3 font-semibold text-white">${p.name}</td>
           <td class="p-3 text-gray-400 uppercase text-[10px]">${p.category}</td>
@@ -1011,7 +1011,7 @@
           </button>
 
           <div class="flex items-center gap-3">
-            <img src="${item.image}" alt="" class="w-12 h-12 rounded-xl object-cover bg-theme-card border border-theme-border" onerror="this.src='image_1118a4.jpg'">
+            <img src="${item.image}" alt="" class="w-12 h-12 rounded-xl object-cover bg-theme-card border border-theme-border" onerror="this.src='logo.jpg'">
             <div>
               <h5 class="text-sm font-bold text-white pr-6">${item.name}</h5>
               <p class="text-xs text-brand-orange font-bold">${item.priceText}</p>
