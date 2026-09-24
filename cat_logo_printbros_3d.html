@@ -2,7 +2,7 @@
 <html lang="pt-BR" class="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title id="siteTitleTag">PrintBros 3D - Catálogo & Impressão 3D Personalizada</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
@@ -57,6 +57,13 @@
       background-color: var(--bg-main);
       color: #F3F4F6;
       font-family: 'Plus Jakarta Sans', sans-serif;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    header.sticky {
+      top: 0;
+      padding-top: env(safe-area-inset-top, 0px);
     }
 
     /* Custom Scrollbar */
@@ -97,23 +104,23 @@
 <body class="min-h-screen flex flex-col justify-between selection:bg-brand-purple selection:text-white">
 
   <header class="sticky top-0 z-30 bg-[#12071B]/90 backdrop-blur-md border-b border-theme-border">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2">
       <!-- Logo & Branding Header -->
-      <a href="#" class="flex items-center gap-3.5 group">
-        <div id="logoContainer" class="w-12 h-12 rounded-2xl bg-theme-card border border-theme-border flex items-center justify-center p-1 glow-purple group-hover:scale-105 transition-all duration-300 overflow-hidden">
-          <img id="customLogoImg" src="logo.jpg" class="w-full h-full object-cover rounded-xl" alt="PrintBros 3D Logo" onerror="this.classList.add('hidden'); document.getElementById('logoFallbackIcon').classList.remove('hidden');">
-          <i data-lucide="box" id="logoFallbackIcon" class="hidden w-7 h-7 text-brand-orange"></i>
+      <a href="#" class="flex items-center gap-2 sm:gap-3.5 group min-w-0">
+        <div id="logoContainer" class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-xl sm:rounded-2xl bg-theme-card border border-theme-border flex items-center justify-center p-1 glow-purple group-hover:scale-105 transition-all duration-300 overflow-hidden">
+          <img id="customLogoImg" src="image_1118a4.jpg" class="w-full h-full object-cover rounded-lg sm:rounded-xl" alt="PrintBros 3D Logo" onerror="this.classList.add('hidden'); document.getElementById('logoFallbackIcon').classList.remove('hidden');">
+          <i data-lucide="box" id="logoFallbackIcon" class="hidden w-6 h-6 sm:w-7 sm:h-7 text-brand-orange"></i>
         </div>
-        <div>
-          <span id="headerBrandName" class="text-xl font-extrabold tracking-tight text-white block leading-none">PRINTBROS <span class="text-brand-cyan font-black">3D</span></span>
-          <span id="headerTagline" class="text-[10px] text-brand-orange font-semibold uppercase tracking-widest mt-1 block">Manufatura Aditiva & Design</span>
+        <div class="min-w-0">
+          <span id="headerBrandName" class="text-base sm:text-xl font-extrabold tracking-tight text-white block leading-none truncate">PRINTBROS <span class="text-brand-cyan font-black">3D</span></span>
+          <span id="headerTagline" class="hidden sm:block text-[10px] text-brand-orange font-semibold uppercase tracking-widest mt-1 truncate">Manufatura Aditiva & Design</span>
         </div>
       </a>
 
       <!-- Quick Actions / Admin & Cart -->
-      <div class="flex items-center gap-2 sm:gap-3">
+      <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
         <!-- Admin Toggle Button -->
-        <button id="toggleAdminBtn" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-theme-card border border-theme-border hover:border-brand-purple text-xs font-semibold text-gray-300 hover:text-white transition-all">
+        <button id="toggleAdminBtn" class="flex items-center gap-2 p-2.5 sm:px-3.5 sm:py-2 rounded-xl bg-theme-card border border-theme-border hover:border-brand-purple text-xs font-semibold text-gray-300 hover:text-white transition-all">
           <i data-lucide="settings" class="w-4 h-4 text-brand-cyan"></i>
           <span class="hidden md:inline">Painel Admin</span>
         </button>
@@ -123,52 +130,52 @@
           Contato Direct
         </button>
 
-        <button id="openCartBtn" class="relative px-4 py-2 rounded-xl text-white font-bold transition-all glow-orange flex items-center gap-2 bg-gradient-to-r from-brand-orange to-brand-darkOrange hover:brightness-110">
+        <button id="openCartBtn" class="relative px-3 py-2.5 sm:px-4 sm:py-2 rounded-xl text-white font-bold transition-all glow-orange flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-brand-orange to-brand-darkOrange hover:brightness-110">
           <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-          <span class="text-sm">Orçamento</span>
-          <span id="cartCountBadge" class="bg-white text-theme-bg text-xs font-black w-5 h-5 rounded-full flex items-center justify-center shadow-md">0</span>
+          <span class="text-xs sm:text-sm whitespace-nowrap">Orçamento</span>
+          <span id="cartCountBadge" class="bg-white text-theme-bg text-xs font-black w-5 h-5 rounded-full flex items-center justify-center shadow-md shrink-0">0</span>
         </button>
       </div>
     </div>
   </header>
 
-  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+  <main class="flex-grow max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-12">
     
     <!-- Hero / Header Details -->
-    <div class="text-center max-w-3xl mx-auto mb-12">
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-theme-card border border-brand-purple/40 text-brand-cyan text-xs font-bold mb-6 glow-purple">
-        <i data-lucide="sparkles" class="w-4 h-4 text-brand-orange"></i>
+    <div class="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 rounded-full bg-theme-card border border-brand-purple/40 text-brand-cyan text-[11px] sm:text-xs font-bold mb-5 sm:mb-6 glow-purple">
+        <i data-lucide="sparkles" class="w-4 h-4 text-brand-orange shrink-0"></i>
         <span>Tecnologia em Impressão 3D & Prototipagem</span>
       </div>
 
-      <div class="flex justify-center mb-6">
+      <div class="flex justify-center mb-5 sm:mb-6">
         <div class="relative group">
           <div class="absolute -inset-1 rounded-3xl bg-gradient-cube opacity-50 blur-lg group-hover:opacity-80 transition duration-500"></div>
-          <img src="logo.jpg" alt="PrintBros 3D" class="relative w-32 h-32 sm:w-40 sm:h-40 rounded-2xl border-2 border-theme-border object-cover shadow-2xl">
+          <img src="image_1118a4.jpg" alt="PrintBros 3D" class="relative w-28 h-28 sm:w-40 sm:h-40 rounded-2xl border-2 border-theme-border object-cover shadow-2xl">
         </div>
       </div>
 
-      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4 leading-tight">
+      <h1 class="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-3 sm:mb-4 leading-tight px-2">
         Catálogo Exclusivo <span class="text-gradient-logo">PrintBros 3D</span>
       </h1>
-      <p id="heroSubtitle" class="text-gray-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+      <p id="heroSubtitle" class="text-gray-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto px-2">
         🛠️ Transformamos suas ideias em peças 3D. Escolha o item, personalize cores ou gravações e receba seu orçamento direto no WhatsApp!
       </p>
     </div>
 
     <!-- ADMIN PANEL / CONFIGURATOR (Hidden by default) -->
-    <section id="adminPanel" class="hidden mb-12 bg-theme-card border-2 border-brand-purple rounded-3xl p-6 sm:p-8 space-y-8 shadow-2xl relative">
-      <div class="flex items-center justify-between border-b border-theme-border pb-4">
-        <div class="flex items-center gap-3">
-          <div class="p-2.5 rounded-xl text-white bg-brand-purple">
-            <i data-lucide="sliders" class="w-6 h-6"></i>
+    <section id="adminPanel" class="hidden mb-8 sm:mb-12 bg-theme-card border-2 border-brand-purple rounded-2xl sm:rounded-3xl p-4 sm:p-8 space-y-6 sm:space-y-8 shadow-2xl relative">
+      <div class="flex items-center justify-between border-b border-theme-border pb-4 gap-2">
+        <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
+          <div class="p-2 sm:p-2.5 rounded-xl text-white bg-brand-purple shrink-0">
+            <i data-lucide="sliders" class="w-5 h-5 sm:w-6 sm:h-6"></i>
           </div>
-          <div>
-            <h2 class="text-xl font-bold text-white">Painel de Gerenciamento PrintBros 3D</h2>
-            <p class="text-xs text-gray-400">Personalize dados da marca, ajuste o tema ou cadastre novos produtos no catálogo.</p>
+          <div class="min-w-0">
+            <h2 class="text-base sm:text-xl font-bold text-white truncate">Painel de Gerenciamento PrintBros 3D</h2>
+            <p class="hidden sm:block text-xs text-gray-400">Personalize dados da marca, ajuste o tema ou cadastre novos produtos no catálogo.</p>
           </div>
         </div>
-        <button id="closeAdminBtn" class="p-2 text-gray-400 hover:text-white rounded-xl border border-theme-border hover:bg-theme-border">
+        <button id="closeAdminBtn" class="p-2 text-gray-400 hover:text-white rounded-xl border border-theme-border hover:bg-theme-border shrink-0">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
@@ -226,8 +233,8 @@
           </div>
         </div>
 
-        <div class="flex justify-end gap-3 pt-4">
-          <button id="saveBrandingBtn" class="px-6 py-2.5 rounded-xl text-white font-bold text-sm bg-gradient-to-r from-brand-orange to-brand-darkOrange hover:brightness-110 transition-all glow-orange">
+        <div class="flex justify-end pt-4">
+          <button id="saveBrandingBtn" class="w-full sm:w-auto px-6 py-2.5 rounded-xl text-white font-bold text-sm bg-gradient-to-r from-brand-orange to-brand-darkOrange hover:brightness-110 transition-all glow-orange">
             Salvar Alterações
           </button>
         </div>
@@ -270,26 +277,26 @@
     </section>
 
     <!-- Search & Filter Controls -->
-    <div class="space-y-6 mb-10">
+    <div class="space-y-4 sm:space-y-6 mb-8 sm:mb-10">
       <div class="relative max-w-xl mx-auto">
         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-brand-cyan">
           <i data-lucide="search" class="w-5 h-5"></i>
         </div>
-        <input type="text" id="searchInput" placeholder="Busque por produtos: Troféu, Vaso, Suporte Gamer, Escudo..." 
-               class="w-full pl-11 pr-10 py-3.5 bg-theme-card border border-theme-border rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:border-brand-orange transition-all text-sm shadow-inner">
+        <input type="text" id="searchInput" placeholder="Busque por produtos: Luffy, Kratos, Dragão..." 
+               class="w-full pl-11 pr-10 py-3 sm:py-3.5 bg-theme-card border border-theme-border rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:border-brand-orange transition-all text-sm shadow-inner">
         <button id="clearSearchBtn" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-white">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
 
       <!-- Categories Tabs -->
-      <div class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-2" id="categoryContainer">
+      <div class="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-2 -mx-3 px-3 sm:mx-0 sm:px-0" id="categoryContainer">
         <!-- Categories injected by JavaScript -->
       </div>
     </div>
 
     <!-- Product Grid -->
-    <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
       <!-- Products rendered dynamically -->
     </div>
 
@@ -307,14 +314,14 @@
 
   </main>
 
-  <footer class="bg-theme-card/60 border-t border-theme-border mt-16 py-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
-      <div class="flex items-center gap-3.5">
-        <img src="logo.jpg" class="w-9 h-9 rounded-xl border border-theme-border object-cover" alt="PrintBros 3D">
-        <p class="text-sm text-gray-400">© 2026 <strong id="footerBrandName" class="text-white">PrintBros 3D</strong> - Impressão 3D de Alta Qualidade.</p>
+  <footer class="bg-theme-card/60 border-t border-theme-border mt-10 sm:mt-16 py-6 sm:py-8">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 text-center md:text-left">
+      <div class="flex items-center gap-3 sm:gap-3.5">
+        <img src="image_1118a4.jpg" class="w-9 h-9 rounded-xl border border-theme-border object-cover" alt="PrintBros 3D">
+        <p class="text-xs sm:text-sm text-gray-400">© 2026 <strong id="footerBrandName" class="text-white">PrintBros 3D</strong> - Impressão 3D de Alta Qualidade.</p>
       </div>
 
-      <div class="flex items-center gap-6 text-xs text-gray-400">
+      <div class="flex items-center gap-4 sm:gap-6 text-[11px] sm:text-xs text-gray-400">
         <span class="flex items-center gap-1.5"><i data-lucide="layers" class="w-4 h-4 text-brand-orange"></i> PLA, PETG & Resina HD</span>
         <span class="flex items-center gap-1.5"><i data-lucide="zap" class="w-4 h-4 text-brand-cyan"></i> Envio Rápido</span>
       </div>
@@ -322,24 +329,24 @@
   </footer>
 
   <!-- PRODUCT CUSTOMIZATION MODAL FOR BUYER -->
-  <div id="productModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-    <div class="bg-theme-card border border-theme-border w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]">
+  <div id="productModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+    <div class="bg-theme-card border border-theme-border w-full h-full sm:h-auto sm:max-w-2xl rounded-none sm:rounded-3xl overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-full sm:max-h-[90vh]">
       
-      <div class="p-5 border-b border-theme-border flex items-center justify-between bg-theme-bg/50">
-        <div class="flex items-center gap-2">
-          <span id="modalCategoryBadge" class="text-xs px-2.5 py-1 rounded-md bg-theme-card text-brand-cyan border border-theme-border font-bold uppercase"></span>
-          <h3 id="modalTitle" class="text-lg font-bold text-white"></h3>
+      <div class="p-4 sm:p-5 border-b border-theme-border flex items-center justify-between bg-theme-bg/50 shrink-0" style="padding-top: max(1rem, env(safe-area-inset-top, 0px));">
+        <div class="flex items-center gap-2 min-w-0">
+          <span id="modalCategoryBadge" class="text-[10px] sm:text-xs px-2 sm:px-2.5 py-1 rounded-md bg-theme-card text-brand-cyan border border-theme-border font-bold uppercase shrink-0"></span>
+          <h3 id="modalTitle" class="text-base sm:text-lg font-bold text-white truncate"></h3>
         </div>
-        <button id="closeModalBtn" class="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-theme-border transition-colors">
+        <button id="closeModalBtn" class="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-theme-border transition-colors shrink-0">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
 
-      <div class="p-6 overflow-y-auto space-y-6 flex-grow">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-theme-bg rounded-2xl p-4 flex flex-col items-center justify-center border border-theme-border relative group min-h-[200px]">
-            <img id="modalImage" src="" alt="" class="w-48 h-48 object-cover rounded-xl drop-shadow-2xl transition-transform duration-300 group-hover:scale-105">
-            <span id="modalPriceBadge" class="absolute bottom-3 right-3 bg-theme-card/90 border border-theme-border px-3 py-1 rounded-xl text-xs font-bold text-brand-orange"></span>
+      <div class="p-4 sm:p-6 overflow-y-auto space-y-5 sm:space-y-6 flex-grow">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+          <div class="bg-theme-bg rounded-2xl p-3 sm:p-4 flex flex-col items-center justify-center border border-theme-border relative group min-h-[160px] sm:min-h-[200px]">
+            <img id="modalImage" src="" alt="" class="w-36 h-36 sm:w-48 sm:h-48 object-cover rounded-xl drop-shadow-2xl transition-transform duration-300 group-hover:scale-105">
+            <span id="modalPriceBadge" class="absolute bottom-2.5 right-2.5 sm:bottom-3 sm:right-3 bg-theme-card/90 border border-theme-border px-2.5 py-1 rounded-xl text-xs font-bold text-brand-orange"></span>
           </div>
 
           <div class="space-y-3">
@@ -398,11 +405,11 @@
         </div>
       </div>
 
-      <div class="p-5 border-t border-theme-border bg-theme-bg/50 flex items-center justify-end gap-3">
-        <button id="cancelModalBtn" class="px-5 py-2.5 rounded-xl border border-theme-border text-gray-300 hover:bg-theme-border text-sm font-semibold">
+      <div class="p-4 sm:p-5 border-t border-theme-border bg-theme-bg/50 flex flex-col-reverse sm:flex-row items-center justify-end gap-2.5 sm:gap-3 shrink-0" style="padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));">
+        <button id="cancelModalBtn" class="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-theme-border text-gray-300 hover:bg-theme-border text-sm font-semibold">
           Cancelar
         </button>
-        <button id="addToCartBtn" class="px-6 py-2.5 rounded-xl text-white text-sm font-bold bg-gradient-to-r from-brand-orange to-brand-darkOrange hover:brightness-110 flex items-center gap-2 glow-orange">
+        <button id="addToCartBtn" class="w-full sm:w-auto px-6 py-2.5 rounded-xl text-white text-sm font-bold bg-gradient-to-r from-brand-orange to-brand-darkOrange hover:brightness-110 flex items-center justify-center gap-2 glow-orange">
           <i data-lucide="plus-circle" class="w-4 h-4"></i>
           Adicionar ao Orçamento
         </button>
@@ -411,16 +418,16 @@
   </div>
 
   <!-- ADMIN PRODUCT EDIT/CREATE MODAL -->
-  <div id="adminProductModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm opacity-0 transition-opacity duration-300">
-    <div class="bg-theme-card border border-theme-border w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col">
-      <div class="p-5 border-b border-theme-border flex items-center justify-between bg-theme-bg/50">
+  <div id="adminProductModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-0 sm:p-4 bg-black/80 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+    <div class="bg-theme-card border border-theme-border w-full h-full sm:h-auto sm:max-w-lg rounded-none sm:rounded-3xl overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col">
+      <div class="p-4 sm:p-5 border-b border-theme-border flex items-center justify-between bg-theme-bg/50 shrink-0" style="padding-top: max(1rem, env(safe-area-inset-top, 0px));">
         <h3 id="adminProductModalTitle" class="text-base font-bold text-white">Cadastrar Novo Produto</h3>
         <button id="closeAdminProductModalBtn" class="p-2 text-gray-400 hover:text-white rounded-xl">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
 
-      <form id="adminProductForm" class="p-6 space-y-4 text-xs overflow-y-auto max-h-[75vh]">
+      <form id="adminProductForm" class="p-4 sm:p-6 space-y-4 text-xs overflow-y-auto max-h-full sm:max-h-[75vh]">
         <input type="hidden" id="editProductId">
 
         <div class="space-y-1.5">
@@ -462,9 +469,9 @@
           <input type="text" id="prodInputTags" placeholder="Geek, Troféu, Gamer" class="w-full px-3.5 py-2 bg-theme-bg border border-theme-border rounded-xl text-white text-sm focus:border-brand-orange">
         </div>
 
-        <div class="pt-4 flex justify-end gap-3 border-t border-theme-border">
-          <button type="button" id="cancelAdminProductModalBtn" class="px-4 py-2 rounded-xl border border-theme-border text-gray-300">Cancelar</button>
-          <button type="submit" class="px-5 py-2 rounded-xl text-white font-bold bg-brand-orange hover:bg-brand-darkOrange">Salvar Produto</button>
+        <div class="pt-4 flex flex-col-reverse sm:flex-row justify-end gap-2.5 sm:gap-3 border-t border-theme-border" style="padding-bottom: max(0px, env(safe-area-inset-bottom, 0px));">
+          <button type="button" id="cancelAdminProductModalBtn" class="w-full sm:w-auto px-4 py-2.5 sm:py-2 rounded-xl border border-theme-border text-gray-300">Cancelar</button>
+          <button type="submit" class="w-full sm:w-auto px-5 py-2.5 sm:py-2 rounded-xl text-white font-bold bg-brand-orange hover:bg-brand-darkOrange">Salvar Produto</button>
         </div>
       </form>
     </div>
@@ -474,22 +481,22 @@
   <div id="cartDrawer" class="fixed inset-0 z-50 hidden">
     <div id="cartBackdrop" class="absolute inset-0 bg-black/80 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
 
-    <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
-      <div id="cartPanel" class="w-screen max-w-md bg-theme-card border-l border-theme-border shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300">
+    <div class="absolute inset-y-0 right-0 max-w-full flex pl-0 sm:pl-10">
+      <div id="cartPanel" class="w-screen sm:max-w-md bg-theme-card sm:border-l border-theme-border shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300">
         
-        <div class="p-5 border-b border-theme-border flex items-center justify-between bg-theme-bg/50">
+        <div class="p-4 sm:p-5 border-b border-theme-border flex items-center justify-between bg-theme-bg/50 shrink-0" style="padding-top: max(1rem, env(safe-area-inset-top, 0px));">
           <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-lg text-brand-orange flex items-center justify-center border border-theme-border bg-theme-card">
+            <div class="w-8 h-8 rounded-lg text-brand-orange flex items-center justify-center border border-theme-border bg-theme-card shrink-0">
               <i data-lucide="shopping-bag" class="w-4 h-4"></i>
             </div>
             <h3 class="text-base font-bold text-white">Sua Lista de Orçamento</h3>
           </div>
-          <button id="closeCartBtn" class="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-theme-border transition-colors">
+          <button id="closeCartBtn" class="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-theme-border transition-colors shrink-0">
             <i data-lucide="x" class="w-5 h-5"></i>
           </button>
         </div>
 
-        <div id="cartItemsContainer" class="p-5 overflow-y-auto space-y-4 flex-grow">
+        <div id="cartItemsContainer" class="p-4 sm:p-5 overflow-y-auto space-y-4 flex-grow">
           <!-- Populated dynamically -->
         </div>
 
@@ -501,7 +508,7 @@
           <p class="text-xs text-gray-400">Escolha os produtos e adicione personalizações antes de enviar.</p>
         </div>
 
-        <div class="p-5 border-t border-theme-border bg-theme-bg/50 space-y-4">
+        <div class="p-4 sm:p-5 border-t border-theme-border bg-theme-bg/50 space-y-4 shrink-0" style="padding-bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));">
           <div class="space-y-2">
             <div class="flex justify-between text-xs text-gray-400">
               <span>Total de Peças:</span>
@@ -524,17 +531,17 @@
   </div>
 
   <!-- Notification Toast -->
-  <div id="toast" class="fixed bottom-5 right-5 z-50 hidden translate-y-10 opacity-0 transition-all duration-300 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 border bg-theme-card border-brand-purple">
-    <i data-lucide="check-circle" class="w-5 h-5 text-brand-cyan"></i>
+  <div id="toast" class="fixed bottom-5 left-4 right-4 sm:left-auto sm:right-5 sm:max-w-sm z-50 hidden translate-y-10 opacity-0 transition-all duration-300 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 border bg-theme-card border-brand-purple" style="margin-bottom: env(safe-area-inset-bottom, 0px);">
+    <i data-lucide="check-circle" class="w-5 h-5 text-brand-cyan shrink-0"></i>
     <span id="toastMessage" class="text-sm font-semibold">Mensagem aqui!</span>
   </div>
 
   <script>
-    // Initial Default Data matching logo.jpg branding
+    // Initial Default Data matching image_1118a4.jpg branding
     const DEFAULT_BRANDING = {
       name: "PRINTBROS 3D",
       tagline: "🛠️ Transformamos suas ideias em peças 3D",
-      logoUrl: "logo.jpg",
+      logoUrl: "image_1118a4.jpg",
       phone: "5581984658767",
       colors: {
         orange: "#FF9800",
@@ -693,7 +700,7 @@
           : "bg-theme-card text-gray-400 hover:text-white border-theme-border hover:border-brand-orange";
 
         return `
-          <button data-id="${cat.id}" class="category-btn flex items-center gap-2 px-4 py-2.5 rounded-xl border text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${activeClasses}">
+          <button data-id="${cat.id}" class="category-btn flex items-center gap-1.5 sm:gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl border text-[11px] sm:text-sm font-semibold transition-all whitespace-nowrap shrink-0 ${activeClasses}">
             <i data-lucide="${cat.icon}" class="w-4 h-4 text-brand-orange"></i>
             ${cat.label}
           </button>
@@ -732,42 +739,42 @@
       productGrid.classList.remove('hidden');
 
       productGrid.innerHTML = filtered.map(product => `
-        <div class="bg-theme-card border border-theme-border rounded-2xl overflow-hidden hover:border-brand-purple transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between group">
+        <div class="bg-theme-card border border-theme-border rounded-xl sm:rounded-2xl overflow-hidden hover:border-brand-purple transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between group">
           <div>
-            <div class="relative bg-theme-bg p-4 flex items-center justify-center overflow-hidden h-52 border-b border-theme-border">
+            <div class="relative bg-theme-bg p-2 sm:p-4 flex items-center justify-center overflow-hidden h-32 sm:h-52 border-b border-theme-border">
               <img src="${product.image}" alt="${product.name}" 
-                   class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
-                   onerror="this.src='logo.jpg'">
+                   class="w-full h-full object-cover rounded-lg sm:rounded-xl group-hover:scale-105 transition-transform duration-500"
+                   onerror="this.src='image_1118a4.jpg'">
               
-              <span class="absolute top-3 left-3 bg-theme-card/90 backdrop-blur-md border border-theme-border text-[10px] uppercase font-bold text-brand-cyan px-2.5 py-1 rounded-lg">
+              <span class="absolute top-1.5 left-1.5 sm:top-3 sm:left-3 bg-theme-card/90 backdrop-blur-md border border-theme-border text-[8px] sm:text-[10px] uppercase font-bold text-brand-cyan px-1.5 py-0.5 sm:px-2.5 sm:py-1 rounded-md sm:rounded-lg">
                 ${product.categoryLabel || 'Item 3D'}
               </span>
             </div>
 
-            <div class="p-5 space-y-3">
-              <div class="flex flex-wrap gap-1.5">
+            <div class="p-2.5 sm:p-5 space-y-1.5 sm:space-y-3">
+              <div class="hidden sm:flex flex-wrap gap-1.5">
                 ${product.tags.map(tag => `<span class="text-[10px] bg-theme-bg text-brand-orange px-2 py-0.5 rounded-md border border-theme-border">#${tag}</span>`).join('')}
               </div>
 
-              <h3 class="text-base font-bold text-white group-hover:text-brand-cyan transition-colors leading-snug">
+              <h3 class="text-xs sm:text-base font-bold text-white group-hover:text-brand-cyan transition-colors leading-snug line-clamp-1 sm:line-clamp-none">
                 ${product.name}
               </h3>
 
-              <p class="text-xs text-gray-400 line-clamp-2 leading-relaxed">
+              <p class="hidden sm:block text-xs text-gray-400 line-clamp-2 leading-relaxed">
                 ${product.description}
               </p>
             </div>
           </div>
 
-          <div class="p-5 pt-0 mt-auto flex items-center justify-between gap-2 border-t border-theme-border/50 pt-4">
-            <div>
-              <span class="block text-[10px] text-gray-400 uppercase tracking-wider font-medium">A partir de</span>
-              <span class="text-sm font-extrabold text-white">${getMinSize(product).price}</span>
+          <div class="p-2.5 sm:p-5 pt-0 mt-auto flex items-center justify-between gap-1.5 sm:gap-2 border-t border-theme-border/50 pt-2.5 sm:pt-4">
+            <div class="min-w-0">
+              <span class="block text-[8px] sm:text-[10px] text-gray-400 uppercase tracking-wider font-medium">A partir de</span>
+              <span class="text-xs sm:text-sm font-extrabold text-white truncate block">${getMinSize(product).price}</span>
             </div>
 
             <button onclick="openProductModal('${product.id}')"
-                    class="px-3.5 py-2 text-white text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 bg-gradient-to-r from-brand-orange to-brand-darkOrange hover:brightness-110 glow-orange">
-              <i data-lucide="sliders" class="w-3.5 h-3.5"></i>
+                    class="px-2.5 py-1.5 sm:px-3.5 sm:py-2 text-white text-[10px] sm:text-xs font-bold rounded-lg sm:rounded-xl transition-all flex items-center gap-1 sm:gap-1.5 bg-gradient-to-r from-brand-orange to-brand-darkOrange hover:brightness-110 glow-orange shrink-0">
+              <i data-lucide="sliders" class="w-3 h-3 sm:w-3.5 sm:h-3.5"></i>
               Orçar
             </button>
           </div>
@@ -784,7 +791,7 @@
       tableBody.innerHTML = products.map(p => `
         <tr class="hover:bg-theme-bg/50">
           <td class="p-3">
-            <img src="${p.image}" class="w-10 h-10 object-cover rounded-lg border border-theme-border" onerror="this.src='logo.jpg'">
+            <img src="${p.image}" class="w-10 h-10 object-cover rounded-lg border border-theme-border" onerror="this.src='image_1118a4.jpg'">
           </td>
           <td class="p-3 font-semibold text-white">${p.name}</td>
           <td class="p-3 text-gray-400 uppercase text-[10px]">${p.category}</td>
@@ -1011,7 +1018,7 @@
           </button>
 
           <div class="flex items-center gap-3">
-            <img src="${item.image}" alt="" class="w-12 h-12 rounded-xl object-cover bg-theme-card border border-theme-border" onerror="this.src='logo.jpg'">
+            <img src="${item.image}" alt="" class="w-12 h-12 rounded-xl object-cover bg-theme-card border border-theme-border" onerror="this.src='image_1118a4.jpg'">
             <div>
               <h5 class="text-sm font-bold text-white pr-6">${item.name}</h5>
               <p class="text-xs text-brand-orange font-bold">${item.priceText}</p>
