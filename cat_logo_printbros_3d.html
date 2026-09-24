@@ -373,7 +373,7 @@
             Personalize seu Pedido
           </h4>
 
-          <div class="space-y-2">
+          <div id="sizeWrapper" class="space-y-2">
             <label class="block text-xs font-medium text-gray-300">Tamanho:</label>
             <div id="sizeOptions" class="flex flex-wrap gap-2"></div>
           </div>
@@ -443,6 +443,7 @@
               <option value="decoracao">Decoração & Setup</option>
               <option value="tecnicas">Peças Técnicas</option>
               <option value="colecionaveis">Colecionáveis & Miniaturas</option>
+              <option value="religiosas">Peças Religiosas</option>
             </select>
           </div>
 
@@ -451,7 +452,7 @@
         <div class="space-y-1.5">
           <label class="font-semibold text-gray-300">Tamanhos e Preços (formato Tamanho:Preço, separados por vírgula):</label>
           <input type="text" id="prodInputSizes" required placeholder="12cm:29.90, 18cm:59.90, 23cm:79.90" class="w-full px-3.5 py-2 bg-theme-bg border border-theme-border rounded-xl text-white text-sm focus:border-brand-orange">
-          <p class="text-[10px] text-gray-500">O menor preço informado é exibido em destaque no card do produto.</p>
+          <p class="text-[10px] text-gray-500">O menor preço informado é exibido em destaque no card do produto. Para preço único sem tamanho, use apenas <strong>Único:5.00</strong>.</p>
         </div>
 
         <div class="space-y-1.5">
@@ -610,6 +611,58 @@
         image: "produtos/pikachu.jpg",
         description: "Pikachu animado com bochechas vermelhas e pintura amarela vibrante. Disponível em 3 tamanhos, perfeito para presente ou decoração.",
         sizes: DEFAULT_SIZES
+      },
+      {
+        id: "pb6",
+        name: "Chaveiro Cruz Fé",
+        category: "religiosas",
+        categoryLabel: "Peças Religiosas",
+        tags: ["Fé", "Chaveiro", "Religioso"],
+        image: "produtos/chaveiro-fe.jpg",
+        description: "Chaveiro em formato de cruz com a palavra \"Fé\" em relevo branco sobre base marrom, acabamento liso e acompanha corrente de bolinhas. Valor único, ideal para presente ou lembrancinha.",
+        sizes: [{ label: "Único", price: "R$ 5,00", rawPrice: 5.00 }],
+        noSize: true
+      },
+      {
+        id: "pb7",
+        name: "Nossa Senhora no Tubo de Acrílico",
+        category: "religiosas",
+        categoryLabel: "Peças Religiosas",
+        tags: ["Nossa Senhora", "Acrílico", "Religioso"],
+        image: "produtos/nossa-senhora-tubo.jpg",
+        description: "Imagem de Nossa Senhora em oração com detalhes no manto, protegida por tubo de acrílico transparente com base colorida. A imagem tem 4,5cm e o acrílico tem 7cm. Valor único, perfeito para presente ou lembrancinha.",
+        sizes: [{ label: "Único", price: "R$ 8,00", rawPrice: 8.00 }],
+        noSize: true
+      },
+      {
+        id: "pb8",
+        name: "Ele Vive com Coroa de Espinhos",
+        category: "religiosas",
+        categoryLabel: "Peças Religiosas",
+        tags: ["Ele Vive", "Páscoa", "Religioso"],
+        image: "produtos/ele-vive.jpg",
+        description: "Letreiro \"Ele Vive\" em letra cursiva branca com acabamento fosco, coroa de espinhos amarela em detalhe e base de madeira. Disponível em 3 tamanhos, ótimo para decoração de altar, mesa ou presente.",
+        sizes: DEFAULT_SIZES
+      },
+      {
+        id: "pb9",
+        name: "Anjo Orando com Nome",
+        category: "religiosas",
+        categoryLabel: "Peças Religiosas",
+        tags: ["Anjo", "Personalizado", "Religioso"],
+        image: "produtos/anjo-orando.jpg",
+        description: "Anjinho ajoelhado em oração, com asas e vestes em alto nível de detalhe, sobre base dourada com plaquinha de nome personalizada. Disponível em 3 tamanhos, ideal para batizado, lembrança ou presente.",
+        sizes: DEFAULT_SIZES
+      },
+      {
+        id: "pb10",
+        name: "Nossa Senhora Estilizada com Terço",
+        category: "religiosas",
+        categoryLabel: "Peças Religiosas",
+        tags: ["Nossa Senhora", "Terço", "Religioso"],
+        image: "produtos/nossa-senhora-azul.jpg",
+        description: "Nossa Senhora em design moderno e minimalista, com manto azul, auréola dourada e terço em relevo. Disponível em 3 tamanhos, perfeita para decoração de altar, quarto ou presente.",
+        sizes: DEFAULT_SIZES
       }
     ];
 
@@ -618,12 +671,28 @@
       { id: "trofeus", label: "Futebol & Troféus", icon: "award" },
       { id: "decoracao", label: "Decoração & Setup", icon: "sparkles" },
       { id: "tecnicas", label: "Peças Técnicas", icon: "cpu" },
-      { id: "colecionaveis", label: "Colecionáveis", icon: "smile" }
+      { id: "colecionaveis", label: "Colecionáveis", icon: "smile" },
+      { id: "religiosas", label: "Peças Religiosas", icon: "church" }
     ];
 
     // State Variables Persistent in LocalStorage
     let branding = JSON.parse(localStorage.getItem('pb3d_branding_v2')) || DEFAULT_BRANDING;
     let products = JSON.parse(localStorage.getItem('pb3d_products_v2')) || DEFAULT_PRODUCTS;
+
+    // Migração única: adiciona as peças religiosas para quem já tinha catálogo salvo no navegador
+    (function migrateReligiosas() {
+      try {
+        if (!localStorage.getItem('pb3d_mig_religiosas')) {
+          if (localStorage.getItem('pb3d_products_v2')) {
+            const ids = new Set(products.map(p => p.id));
+            DEFAULT_PRODUCTS.filter(p => p.category === 'religiosas' && !ids.has(p.id))
+              .forEach(p => products.push(p));
+            localStorage.setItem('pb3d_products_v2', JSON.stringify(products));
+          }
+          localStorage.setItem('pb3d_mig_religiosas', '1');
+        }
+      } catch (e) {}
+    })();
     
     let activeCategory = "todos";
     let searchQuery = "";
@@ -768,7 +837,7 @@
 
           <div class="p-2.5 sm:p-5 pt-0 mt-auto flex items-center justify-between gap-1.5 sm:gap-2 border-t border-theme-border/50 pt-2.5 sm:pt-4">
             <div class="min-w-0">
-              <span class="block text-[8px] sm:text-[10px] text-gray-400 uppercase tracking-wider font-medium">A partir de</span>
+              <span class="block text-[8px] sm:text-[10px] text-gray-400 uppercase tracking-wider font-medium">${product.noSize ? 'Valor único' : 'A partir de'}</span>
               <span class="text-xs sm:text-sm font-extrabold text-white truncate block">${getMinSize(product).price}</span>
             </div>
 
@@ -795,7 +864,7 @@
           </td>
           <td class="p-3 font-semibold text-white">${p.name}</td>
           <td class="p-3 text-gray-400 uppercase text-[10px]">${p.category}</td>
-          <td class="p-3 font-bold text-brand-cyan">A partir de ${getMinSize(p).price}</td>
+          <td class="p-3 font-bold text-brand-cyan">${p.noSize ? 'Valor único ' : 'A partir de '}${getMinSize(p).price}</td>
           <td class="p-3 text-right space-x-2">
             <button onclick="editProductAdmin('${p.id}')" class="px-2.5 py-1 bg-theme-bg border border-theme-border hover:border-brand-orange text-gray-300 hover:text-white rounded-lg">
               Editar
@@ -859,6 +928,9 @@
         return label ? { label, rawPrice, price: 'R$ ' + rawPrice.toFixed(2).replace('.', ',') } : null;
       }).filter(Boolean);
 
+      // Preço único sem tamanho: basta informar "Único:5.00"
+      const isSingle = sizeArray.length === 1 && sizeArray[0].label.toLowerCase().replace('ú', 'u') === 'unico';
+
       const productData = {
         id: editId || 'pb_' + Date.now(),
         name: document.getElementById('prodInputName').value.trim(),
@@ -867,6 +939,7 @@
         image: document.getElementById('prodInputImage').value.trim(),
         description: document.getElementById('prodInputDescription').value.trim(),
         sizes: sizeArray.length > 0 ? sizeArray : DEFAULT_SIZES,
+        noSize: isSingle,
         tags: tagArray.length > 0 ? tagArray : ["3D", "PrintBros"]
       };
 
@@ -915,6 +988,9 @@
       document.getElementById('customTextBaseOpt').checked = false;
       document.getElementById('customNotes').value = '';
       document.getElementById('modalQtyDisplay').textContent = modalQuantity;
+
+      // Produtos de valor único não exibem seleção de tamanho
+      document.getElementById('sizeWrapper').classList.toggle('hidden', !!selectedProduct.noSize);
 
       const sizeContainer = document.getElementById('sizeOptions');
       sizeContainer.innerHTML = sizes.map((size) => {
@@ -970,6 +1046,7 @@
         priceText: priceText,
         unitPrice: unitPrice,
         size: selectedSize.label,
+        noSize: !!selectedProduct.noSize,
         includeBase: wantsBase,
         customText: document.getElementById('customText').value.trim(),
         notes: document.getElementById('customNotes').value.trim(),
@@ -1026,7 +1103,7 @@
           </div>
 
           <div class="text-xs text-gray-400 space-y-1 bg-theme-card/60 p-2.5 rounded-xl border border-theme-border/50">
-            <div><strong class="text-gray-300">Tamanho:</strong> ${item.size}</div>
+            ${item.noSize ? '' : `<div><strong class="text-gray-300">Tamanho:</strong> ${item.size}</div>`}
             ${item.customText ? `<div><strong class="text-gray-300">Gravação/Nome:</strong> "${item.customText}"${item.includeBase ? ' <span class="text-brand-orange">(com base +R$ 7,00)</span>' : ''}</div>` : ''}
             ${item.notes ? `<div><strong class="text-gray-300">Obs:</strong> ${item.notes}</div>` : ''}
             <div><strong class="text-gray-300">Qtd:</strong> ${item.quantity} un</div>
@@ -1054,7 +1131,7 @@
       cart.forEach((item, idx) => {
         message += `*${idx + 1}. ${item.name}*\n`;
         message += `• Quantidade: ${item.quantity}\n`;
-        message += `• Tamanho: ${item.size}\n`;
+        if (!item.noSize) message += `• Tamanho: ${item.size}\n`;
         if (item.customText) message += `• Gravação/Nome 3D: "${item.customText}"${item.includeBase ? ' (com base +R$ 7,00)' : ''}\n`;
         if (item.notes) message += `• Observações: ${item.notes}\n`;
         message += `• Ref. Preço: ${item.priceText}\n\n`;
